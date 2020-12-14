@@ -21,7 +21,7 @@ class Kickboard:
 
 
 def calc_price(company, kickboard_time):
-    if company == 'gcooter':
+    if company == 'gbike':
         return 450 + 150 * kickboard_time
     elif company == 'xingxing':
         return min(1000, 500 + 100 * kickboard_time)
@@ -39,7 +39,7 @@ def calc_distence(user_pos, kickboard_pos, arrival_pos):
 
 
 def get_kickboard_speed(company):
-    if company == 'gcooter':
+    if company == 'gbike':
         return 20
     elif company == 'xingxing':
         return -1 # TODO:
@@ -76,16 +76,16 @@ def main_():
     arrival_pos
     user_taste
     '''
-    user_pos = [0, 0] # test
-    arrival_pos = [10, 10] # test
-    user_taste = [0.3, 0.2, 0.5] # test
+    user_pos = [0, 0] # TEST:
+    arrival_pos = [10, 10] # TEST:
+    user_taste = [0.3, 0.2, 0.5] # TEST:
 
     ### step 2. get kickboard list
     '''
     백엔드에서 킥보드 데이터에 대한 리스트를 파이썬으로 보내줌.
     '''
 
-    # test, 이 경우 get_kickboard_info() 함수 필요없음
+    # TEST:, 이 경우 get_kickboard_info() 함수 필요없음
     kb1 = Kickboard()
     kb2 = Kickboard()
     kickboard_list = [kb1, kb2]
