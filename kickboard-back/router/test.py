@@ -143,7 +143,7 @@ def main_(argv):
     각 킥보드당 preference, price, kickboard_time, walk_time
     '''
 
-    print("company|kickboard_id|preference|price|kickboard_time|walk_time")
+    print(" company|id|  preference   |     price      | kickboard_time|   walk_time")
     for result in results:
         kickboard_id = result[1].id_
         company = result[1].company
@@ -152,13 +152,13 @@ def main_(argv):
         kickboard_time = result[3]
         walk_time = result[4]
 
-        print(company, kickboard_id, preference, price, kickboard_time, walk_time, sep='|')
+        print("%8s|%2d|%+3.12lf|%3.12lf|%+3.12lf|%+3.12lf"%(company, kickboard_id, preference, price, kickboard_time, walk_time))
 
 
 
 if __name__ == '__main__':
     print("python program executed")
-    #argv = ['router/test.py', '[37.43241,127.65321]', '[37.43,127.65]', '[{\"battery\":100,\"isAvailable\":true,\"kickboard_pos_lat\":37.43523,\"kickboard_pos_lon\":127.53225,\"max_kickboard_distance\":20,\"company\":\"Beam\"},{\"battery\":78,\"isAvailable\":true,\"kickboard_pos_lat\":37.87643,\"kickboard_pos_lon\":127.53213,\"max_kickboard_distance\":21,\"company\":\"XingXing\"},{\"battery\":90,\"isAvailable\":true,\"kickboard_pos_lat\":37.43241,\"kickboard_pos_lon\":127.65321,\"max_kickboard_distance\":32,\"company\":\"Gbike\"}]']
+    argv = ['router/test.py', '[37.43241,127.65321]', '[37.43,127.65]', '[{\"battery\":100,\"isAvailable\":true,\"kickboard_pos_lat\":37.43523,\"kickboard_pos_lon\":127.53225,\"max_kickboard_distance\":20,\"company\":\"Beam\"},{\"battery\":78,\"isAvailable\":true,\"kickboard_pos_lat\":37.87643,\"kickboard_pos_lon\":127.53213,\"max_kickboard_distance\":21,\"company\":\"XingXing\"},{\"battery\":90,\"isAvailable\":true,\"kickboard_pos_lat\":37.43241,\"kickboard_pos_lon\":127.65321,\"max_kickboard_distance\":32,\"company\":\"Gbike\"}]']
     print(sys.argv)
-    main_(sys.argv)
+    main_(argv)
 
