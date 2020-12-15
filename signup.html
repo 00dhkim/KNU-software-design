@@ -36,7 +36,19 @@
             walk_time_val /= sum
             kickboard_time_val /= sum
             try {
-                let response = await fetch("http://127.0.0.1/auth/new?id="+id+"&password="+pw+"&price="+price_val+"&walk_time="+walk_time_val+"&kickboard_time="+kickboard_time_val)
+                let response = await fetch("http://127.0.0.1/auth/new",{
+                    method: "POST",
+                    headers: {
+                        'Content-type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        'id': id,
+                        'password': pw,
+                        'price': price_val,
+                        'kickboard_time': kickboard_time_val,
+                        'walk_time': walk_time_val
+                    })
+                })
                 let result = await response.json()
                 if(response.ok) {
                     alert("회원가입이 완료되었습니다.")
