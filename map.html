@@ -2,13 +2,14 @@
 <html lang="ko">
 <head>
   <meta charset="UTF-8">
+  <link rel="stylesheet" href="map.css" />
   <title>google map</title>
 
   <style>
     * {margin: 0; padding: 0;}
     html, body { height: 100%}
     #map {
-      height: 100%
+      height: 450px;
     }
     div.wrap {
        width: 100px;
@@ -143,15 +144,18 @@
         }
       }
 
-
-      console.long('object');
+      console.log('object');
     }, function (error) { //에러처리
-      console.long(error);
+      console.log(error);
     });
+
   </script>
 
-  <input type='button' value='추천 이용' />
-  <input type='button' value='일반 이용' />
+  <div class="map_btn_div">
+    <input id="map_btn1" type='button' value='추천 이용' />
+    <input id="map_btn2" type='button' value='일반 이용' />
+  </div>
+
 
 </body>
 
