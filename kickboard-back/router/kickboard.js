@@ -38,19 +38,29 @@ function rad2deg(rad) {
     return (rad * 180 / Math.PI);
 }
 
-//현재 위치 (위도, 경도)와 거리를 받아서 거리 안에 있는 전동 킥보드 배열 리턴
-//lat: 위도, lon: 경도, dist: 거리(meter)
-router.get('/:company/location', (req, res) => {
-    const arr = []
-    database.ref(req.params.company).once("value").then((snapshot) => {
+const company = ["Beam", "XingXing", "Gbike"]
+
+async function getKickboard(usr_lat, usr_lon, dist) {
+    let arr = []
+    for(let j=0;j<company.length;++j) {
+        let snapshot = await database.ref(company[j]+"/").once("value")
         const data = snapshot.val()
         for(const i in data) {
-            if(distance(data[i].kickboard_pos_lat, data[i].kickboard_pos_lon, req.query.lat, req.query.lon, "meter") <= Number(req.query.dist)) {
+            if(distance(data[i].kickboard_pos_lat, data[i].kickboard_pos_lon, usr_lat, usr_lon, "meter") <= Number(dist)) {
+                data[i].company = company[j]
                 arr.push(data[i])
+                // console.log(arr)
             }
         }
-        res.send(arr)
-    })
+    }
+    console.log(arr)
+    return arr
+}
+
+//현재 위치 (위도, 경도)와 거리를 받아서 거리 안에 있는 전동 킥보드 배열 리턴
+//lat: 위도, lon: 경도, dist: 거리(meter)
+router.get('/location', (req, res) => {
+    res.send(getKickboard(req.query.lat, req.query.lon, req.query.dist))
 })
 
 //회사와 킥보드 id를 받아서 정보 리턴
@@ -70,3 +80,4 @@ router.post('/:company/:kickboardid/return', (req, res) => {
 })
 
 export default router
+export { getKickboard }
