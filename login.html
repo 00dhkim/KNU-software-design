@@ -4,20 +4,35 @@
     <link rel="stylesheet" href="main.css"/>
     <meta charset="UTF-8">
     <title>Login</title>
+    <script>
+        async function login() {
+            const id = document.getElementById("id").value
+            const password = document.getElementById("password").value
+            let response = await fetch("http://127.0.0.1/auth/login?id="+id+"&password="+password)
+            const pharse = await response.json()
+            if(response.ok) {
+                localStorage.setItem('jwt-token', pharse)
+                location.href = 'map.html'
+            }
+            else {
+                alert(pharse.message)
+            }
+        }
+    </script>
 </head>
 <body class="body">
     <h1 class="login">Login</h1>
     <span style="display: inline-flex;">
         <span>
             <a>ID</a>
-            <input type="text">
+            <input id="id" type="text">
             
             <br>
             <a>PW</a>
-            <input type="password">
+            <input id="password" type="password">
         </span>
         <span>
-            <input class="login_btn" type="button" value="로그인" onclick="location=href='map.html'"/>
+            <input class="login_btn" type="button" value="로그인" onclick="login()"/>
         </span>
     </span>
     

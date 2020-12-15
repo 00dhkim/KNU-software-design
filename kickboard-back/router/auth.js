@@ -66,7 +66,7 @@ router.get('/login', (req, res) => {
                     expiresIn: '60m',
                     issuer: 'user'
                 })
-                res.status(200).send(token)
+                res.status(200).send(JSON.stringify(token))
             }
             else {
                 res.status(404).send({code: 404, message: "잘못된 비밀번호입니다."})
