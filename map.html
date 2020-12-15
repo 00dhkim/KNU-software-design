@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>google map</title>
+
+  <style>
+    * {margin: 0; padding: 0;}
+    html, body { height: 100%}
+    #map {
+      height: 100%
+    }
+  </style>
+
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAy7kmlOMSRM1lkU8GP8T605ciZu-uDABQ&callback=initMap"></script>
+</head>
+
+<body>
+  <div id="map"></div>
+  <script>
+    //지도 생성
+    var element = document.getElementById('map');
+    var map = new google.maps.Map(element, {
+      zoom:16,
+      center: new google.maps.LatLng(37, 126),
+      mapTypeId: google.maps.MapTypeId.ROADMAP
+    });
+
+    //현재 위치 가져오기
+    navigator.geolocation.watchPosition(function (position){
+      var latitude = position.coords.latitude;
+      var longitude = position.coords.longitude;
+
+      //현재 위치로 center 맞추기
+      initialLocation = new google.maps.LatLng(latitude, longitude);
+      map.setCenter(initialLocation);
+
+      //현재 위치 마킹하기
+      new google.maps.Marker({
+        position: new google.maps.LatLng(latitude, longitude),
+        map: map
+      });
+
+      //임의로 킥보드 위치 넣어놓음!!!!!!!!
+      var beams=[
+             ['빔1', 35.889163, 128.608486],
+             ['빔2', 35.887163, 128.607956]
+      ];
+      var xingxings=[
+        ['씽씽1', 35.887163, 128.609956]
+      ];
+      var gcooters=[
+        ['지쿠터1', 35.886163, 128.608956]
+      ];
+      //지도에 킥보드들 마킹하기
+      for(var i = 0; i < beams.length; i++){
+        var title = beams[i][0];
+        var pos= new google.maps.LatLng(beams[i][1], beams[i][2]);
+
+        var m= new google.maps.Marker({
+          position: pos,
+          title: title,
+          icon: 'http://maps.google.com/mapfiles/ms/icons/purple-dot.png',
+          map: map,
+        });
+
+        m.addListener('click', function(){
+          alert(title);
+        });
+      }
+      for(var i = 0; i < xingxings.length; i++){
+        var title = xingxings[i][0];
+        var pos= new google.maps.LatLng(xingxings[i][1], xingxings[i][2]);
+
+        var m= new google.maps.Marker({
+          position: pos,
+          title: title,
+          icon: 'http://maps.google.com/mapfiles/ms/icons/yellow-dot.png',
+          map: map,
+        });
+
+        m.addListener('click', function(){
+          alert(title);
+        });
+      }
+      for(var i = 0; i < gcooters.length; i++){
+        var title = gcooters[i][0];
+        var pos= new google.maps.LatLng(gcooters[i][1], gcooters[i][2]);
+
+        var m= new google.maps.Marker({
+          position: pos,
+          title: title,
+          icon: 'http://maps.google.com/mapfiles/ms/icons/green-dot.png',
+          map: map,
+        });
+
+        m.addListener('click', function(){
+          alert(title);
+        });
+      }
+
+
+      console.long('object');
+    }, function (error) { //에러처리
+      console.long(error);
+    });
+  </script>
+</body>
+
+</html>

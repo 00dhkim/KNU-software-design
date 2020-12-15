@@ -11,6 +11,12 @@ TODO:
 - user_taste 업데이트 하기
 - preference 설계하기
 
+단위
+- 가격: 원 (1000 ~ 5000)
+- 거리: meter (10 ~ 100, 걷기), (100 ~ 3000, 타기)
+- 시간: second (100 ~ 500)
+- 속도: meter / second (1 ~ 6)
+
 '''
 
 import sys
@@ -19,11 +25,12 @@ class Kickboard:
     def __init__(self):
         self.id_ = 0
         self.kickboard_pos = [0, 0]
-        self.max_kickboard_distence = [0, 0]
+        self.max_kickboard_distence = [0, 0] # TODO: km 인가, m 인가?
         self.company = "NULL"
 
 
 def calc_price(company, kickboard_time):
+    kickboard_time = kickboard_time / 60 + 1 # 이 함수 내에서만 분 단위로 계산
     if company == 'gbike':
         return 450 + 150 * kickboard_time
     elif company == 'xingxing':
@@ -31,19 +38,24 @@ def calc_price(company, kickboard_time):
     elif company == 'beam':
         return 600 + 180 * kickboard_time
 
+def latitude_to_meter(latitude): # 위도, x
+    return latitude / 109.958489129649955 / 1000
+
+def longitude_to_meter(longitude): # 경도, y
+    return longitude / 99.74 / 1000 
 
 def calc_distence(user_pos, kickboard_pos, arrival_pos):
-    walk_distence = ((user_pos[0] - kickboard_pos[0])**2 + \
-                     (user_pos[1] - kickboard_pos[1]) ** 2) ** 0.5
-    kickboard_distence = ((kickboard_pos[0] - arrival_pos[0]) ** 2 + \
-                          (kickboard_pos[1] - arrival_pos[1]) ** 2) ** 0.5
+    walk_distence = ((latitude_to_meter(user_pos[0] - kickboard_pos[0]))**2 + \
+                     (longitude_to_meter(user_pos[1] - kickboard_pos[1])) ** 2) ** 0.5
+    kickboard_distence = ((latitude_to_meter(kickboard_pos[0] - arrival_pos[0])) ** 2 + \
+                          (longitude_to_meter(kickboard_pos[1] - arrival_pos[1])) ** 2) ** 0.5
 
     return walk_distence, kickboard_distence
 
 
 def get_kickboard_speed(company):
     if company == 'gbike':
-        return 20
+        return 20 * 1000 / 3600
     elif company == 'xingxing':
         return -1 # TODO:
     elif company == 'beam':
@@ -58,14 +70,14 @@ def main_kickboard_procedure(kickboard, user_pos, arrival_pos, user_taste):
     if kickboard_distence > kickboard.max_kickboard_distence:
         return -1 # 배터리 부족해서 못 가는 상황
 
-    walk_time = walk_distence / 4 # 4km/h
+    walk_time = walk_distence / (4 * 1000 / 3600) # 4 km/s
     kickboard_speed = get_kickboard_speed(kickboard.company)
     kickboard_time = kickboard_distence / kickboard_speed
     price = calc_price(kickboard.company, kickboard_time)
 
-    # TODO: 핵심 부분, 어떻게 구현할 건지 고민하자.
     # 가격, 킥보드시간, 걷기시간 모두 작을수록 좋기에 앞에 마이너스 붙음
-    preference = - [price, kickboard_time, walk_time] * user_taste # ERROR:
+    # 5000, 500, 100은 각 값들의 이론상 최댓값이라고 생각하면 됨. 정규화.
+    preference = - price * user_taste[0] / 5000 - kickboard_time * user_taste[1] / 500 - walk_time * user_taste[2] / 100
 
     return preference, price, kickboard_time, walk_time
 
@@ -88,7 +100,7 @@ def main_():
     백엔드에서 킥보드 데이터에 대한 리스트를 파이썬으로 보내줌.
     '''
 
-    # TEST:, 이 경우 get_kickboard_info() 함수 필요없음
+    # TEST:
     kb1 = Kickboard()
     kb2 = Kickboard()
     kickboard_list = [kb1, kb2]
@@ -107,17 +119,15 @@ def main_():
     for kickboard in kickboard_list:
         (preference, price, kickboard_time, walk_time) = \
             main_kickboard_procedure(kickboard, user_pos, arrival_pos, user_taste)
-        results.append((kickboard, preference, price, kickboard_time, walk_time))
-    
+        results.append((preference, kickboard, price, kickboard_time, walk_time))
+
+    results.sort(reverse=True) # preference 큰 순으로 정렬
 
     ### step 5. update user_taste and return all
     '''
     반환해야할 값들
-    updated user_taste
     각 킥보드당 preference, price, kickboard_time, walk_time
     '''
-
-    # TODO: user_taste 업데이트 하기
 
     for result in results:
         kickboard_id = result[0].id_
