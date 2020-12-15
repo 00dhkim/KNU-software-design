@@ -43,7 +43,7 @@
 
       //임의로 킥보드 위치 넣어놓음!!!!!!!!
       var beams=[
-             ['빔1', 35.887163, 128.608486],
+             ['빔1', 35.889163, 128.608486],
              ['빔2', 35.887163, 128.607956]
       ];
       var xingxings=[
@@ -52,7 +52,7 @@
       var gcooters=[
         ['지쿠터1', 35.886163, 128.608956]
       ];
-
+      //지도에 킥보드들 마킹하기
       for(var i = 0; i < beams.length; i++){
         var title = beams[i][0];
         var pos= new google.maps.LatLng(beams[i][1], beams[i][2]);
@@ -60,15 +60,43 @@
         var m= new google.maps.Marker({
           position: pos,
           title: title,
-          icon: "./button-red.png",
+          icon: 'http://maps.google.com/mapfiles/ms/icons/purple-dot.png',
           map: map,
-          animation: google.maps.Animation.DROP,
         });
 
         m.addListener('click', function(){
-          alert(this.getTitle());
+          alert(title);
+        });
+      }
+      for(var i = 0; i < xingxings.length; i++){
+        var title = xingxings[i][0];
+        var pos= new google.maps.LatLng(xingxings[i][1], xingxings[i][2]);
+
+        var m= new google.maps.Marker({
+          position: pos,
+          title: title,
+          icon: 'http://maps.google.com/mapfiles/ms/icons/yellow-dot.png',
+          map: map,
         });
 
+        m.addListener('click', function(){
+          alert(title);
+        });
+      }
+      for(var i = 0; i < gcooters.length; i++){
+        var title = gcooters[i][0];
+        var pos= new google.maps.LatLng(gcooters[i][1], gcooters[i][2]);
+
+        var m= new google.maps.Marker({
+          position: pos,
+          title: title,
+          icon: 'http://maps.google.com/mapfiles/ms/icons/green-dot.png',
+          map: map,
+        });
+
+        m.addListener('click', function(){
+          alert(title);
+        });
       }
 
 
