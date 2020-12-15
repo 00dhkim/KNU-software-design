@@ -62,7 +62,7 @@ return : 킥보드 id에 맞는 킥보드 정보
 
 ## /auth/new
 
-method : post
+method : 
 
 parameter : {
 
