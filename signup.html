@@ -6,10 +6,19 @@
     <title>Login</title>
 
     <script>
-        function signup()
+        async function signup()
         {
-            alert("회원가입이 완료되었습니다.");
-            history.back();
+            let id = document.getElementById("id").value
+            let pw = document.getElementById("pw").value
+            let response = await fetch("http://127.0.0.1/auth/new?id="+id+"&password="+pw)
+            let result = await response.json()
+            if(response.ok()) {
+                alert("회원가입이 완료되었습니다.")
+                history.back()
+            }
+            else {
+                alert(result.message)
+            }
         }
     </script>
 </head>
@@ -18,13 +27,13 @@
     <div>
     <div style="text-align: left;;">   
         <a>이름</a>
-        <input type="text"name="name">
+        <input type="text" id="name" name="name">
         <br>
         <a>ID</a>
-        <input type="text"name="id">
+        <input type="text" id="id" name="id">
         <br>
         <a>PW</a>
-        <input type="password" name="pw">
+        <input type="password" id="pw" name="pw">
 
         <h3>추천 서비스 이용을 위한 필수 항목</h3>
         <h4>가격</h4>
