@@ -8,9 +8,12 @@
 TODO:
 - 3가지 값의 단위 맞추기
 - 판단에 쓰이는 3가지 값 normalize 하기
-- 학습 데이터를 바탕으로 user_taste의 preset 만들기
+- user_taste 업데이트 하기
+- preference 설계하기
 
 '''
+
+import sys
 
 class Kickboard:
     def __init__(self):
@@ -113,17 +116,22 @@ def main_():
     updated user_taste
     각 킥보드당 preference, price, kickboard_time, walk_time
     '''
+
+    # TODO: user_taste 업데이트 하기
+
     for result in results:
         kickboard_id = result[0].id_
+        company = kickboard.company
         preference = result[1]
         price = result[2]
         kickboard_time = result[3]
         walk_time = result[4]
 
-        print(kickboard_id, preference, price, kickboard_time, walk_time, sep='|')
+        print(company, kickboard_id, preference, price, kickboard_time, walk_time, sep='|')
 
 
 
 if __name__ == '__main__':
-    pass
+    print("python program executed")
+    print(sys.argv)
 
