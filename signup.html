@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="main.css"/>
+    <meta charset="UTF-8">
+    <title>Login</title>
+
+    <script>
+        function signup()
+        {
+            alert("회원가입이 완료되었습니다.");
+            history.back();
+        }
+    </script>
+</head>
+<body class="body">
+    <h1 class="login">Sign up</h1>
+    <div>
+    <div style="text-align: left;;">   
+        <a>이름</a>
+        <input type="text"name="name">
+        <br>
+        <a>ID</a>
+        <input type="text"name="id">
+        <br>
+        <a>PW</a>
+        <input type="password" name="pw">
+
+        <h3>추천 서비스 이용을 위한 필수 항목</h3>
+        <h4>가격</h4>
+        <div>
+            <input type="radio" name="price" value="high">매우 중요</input>
+            <input type="radio" name="price" value="mid">중요</input>
+            <input type="radio" name="price" value="low">덜 중요</input>
+        </div>
+        <h4>속도</h4>
+        <div>
+            <input type="radio" name="price" value="high">매우 중요</input>
+            <input type="radio" name="price" value="mid">중요</input>
+            <input type="radio" name="price" value="low">덜 중요</input>
+        </div>
+        <h4>현재위치와 키보드와의 거리</h4>
+        <div>
+            <input type="radio" name="price" value="high">매우 중요</input>
+            <input type="radio" name="price" value="mid">중요</input>
+            <input type="radio" name="price" value="low">덜 중요</input>
+        </div>
+        <br>
+        <input type="button" onclick="signup()" value="회원가입"/>
+    </div>
+    
+    <div>
+        <a onclick="location.href='signup.html'" ></a>
+        
+    </div>
+
+</body>
+
+</html>
