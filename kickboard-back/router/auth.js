@@ -39,13 +39,15 @@ class user {
 //회원가입 : 정보로 id(name), password, taste값을 받음.
 //이미 있는 사용자의 경우 가입 거절 : code 400
 router.post('/new', (req, res) => {
+    console.log(req.body)
     database.ref("user").once("value").then((snapshot) => {
-        if(snapshot.val().hasOwnProperty(req.query.id)) {
+        if(snapshot.val().hasOwnProperty(req.body.id)) {
             res.status(400).send({code: 400, message: "이미 존재하는 사용자입니다."})
         }
         else {
-            const usr = new user(req.query.id, req.query.password, new taste(req.query.kickboard_time, req.query.price, req.query.walk_time))
-            database.ref("user/"+req.query.id).set(usr)
+            
+            const usr = new user(req.body.id, req.body.password, new taste(req.body.kickboard_time, req.body.price, req.body.walk_time))
+            database.ref("user/"+req.body.id).set(usr)
             res.status(200).send(usr)
             console.log("사용자 추가")
             console.log(usr)

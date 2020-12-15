@@ -21,6 +21,7 @@ global.JWT_SECRET = "SoftwareDesign1Team"
 const app = express()
 
 app.use(cors())
+app.use(express.json())
 app.use('/auth', authRouter)
 app.use('/kickboard', kickboardRouter)
 app.use('/user', userRouter)
