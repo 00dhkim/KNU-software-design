@@ -1,0 +1,15 @@
+.body {
+    margin-left: 200px;
+    margin-right: 200px;
+    text-align: center;
+}
+
+.login {
+    text-align: center;
+    font-size: 80px;
+
+}
+.login_btn {
+    height: 80px;
+    width: 80px;;
+}
