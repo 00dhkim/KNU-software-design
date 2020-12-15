@@ -40,9 +40,9 @@ function rad2deg(rad) {
 
 //현재 위치 (위도, 경도)와 거리를 받아서 거리 안에 있는 전동 킥보드 배열 리턴
 //lat: 위도, lon: 경도, dist: 거리(meter)
-router.get('/', (req, res) => {
+router.get('/:company/location', (req, res) => {
     const arr = []
-    database.ref("Beam").once("value").then((snapshot) => {
+    database.ref(req.params.company).once("value").then((snapshot) => {
         const data = snapshot.val()
         for(const i in data) {
             if(distance(data[i].kickboard_pos_lat, data[i].kickboard_pos_lon, req.query.lat, req.query.lon, "meter") <= Number(req.query.dist)) {

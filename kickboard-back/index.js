@@ -21,7 +21,7 @@ const app = express()
 
 app.use('/auth', authRouter)
 app.use('/kickboard', kickboardRouter)
-// app.use('/user', userRouter)
+app.use('/user', userRouter)
 
 const server = app.listen(80, () => {
     console.log('start')

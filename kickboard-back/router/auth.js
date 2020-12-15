@@ -42,7 +42,7 @@ class user {
 router.post('/new', (req, res) => {
     database.ref("user").once("value").then((snapshot) => {
         if(snapshot.val().hasOwnProperty(req.query.id)) {
-            res.status(400).send({error: "이미 존재하는 사용자입니다."})
+            res.status(400).send({code: 400, message: "이미 존재하는 사용자입니다."})
         }
         else {
             const usr = new user(req.query.id, req.query.password, req.query.phonenumber, new taste(req.query.kickboard_time, req.query.price, req.query.walk_time))
@@ -54,7 +54,7 @@ router.post('/new', (req, res) => {
     })
 })
 
-//로그인(토큰 발급) : id, pw 입력받아서 검사하고 올바른 사용자면 토큰 발급
+//로그인(토큰 발급) : id, password 입력받아서 검사하고 올바른 사용자면 토큰 발급
 router.get('/login', (req, res) => {
     database.ref("user").once("value").then((snapshot) => {
         if(snapshot.val().hasOwnProperty(req.query.id)) {
@@ -68,11 +68,11 @@ router.get('/login', (req, res) => {
                 res.status(200).send(token)
             }
             else {
-                res.status(404).send({error: "잘못된 비밀번호입니다."})
+                res.status(404).send({code: 404, message: "잘못된 비밀번호입니다."})
             }
         }
         else {
-            res.status(404).send({error: "잘못된 id입니다."})
+            res.status(404).send({code: 404, message: "잘못된 id입니다."})
         }
     })
 })
