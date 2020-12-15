@@ -38,7 +38,7 @@ class user {
 
 //회원가입 : 정보로 id(name), password, taste값을 받음.
 //이미 있는 사용자의 경우 가입 거절 : code 400
-router.get('/new', (req, res) => {
+router.post('/new', (req, res) => {
     database.ref("user").once("value").then((snapshot) => {
         if(snapshot.val().hasOwnProperty(req.query.id)) {
             res.status(400).send({code: 400, message: "이미 존재하는 사용자입니다."})
