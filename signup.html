@@ -10,14 +10,44 @@
         {
             let id = document.getElementById("id").value
             let pw = document.getElementById("pw").value
-            let response = await fetch("http://127.0.0.1/auth/new?id="+id+"&password="+pw)
-            let result = await response.json()
-            if(response.ok()) {
-                alert("회원가입이 완료되었습니다.")
-                history.back()
+            let price_val = 0
+            let kickboard_time_val = 0
+            let walk_time_val = 0
+            const price = document.getElementsByName("price")
+            const kickboard_time = document.getElementsByName("kickboard_time")
+            const walk_time = document.getElementsByName("walk_time")
+            for(let i=0;i<price.length;++i) {
+                if(price[i].checked) {
+                    price_val = i+1
+                }
             }
-            else {
-                alert(result.message)
+            for(let i=0;i<kickboard_time.length;++i) {
+                if(kickboard_time[i].checked) {
+                    kickboard_time_val = i+1
+                }
+            }
+            for(let i=0;i<walk_time.length;++i) {
+                if(walk_time[i].checked) {
+                    walk_time_val = i+1
+                }
+            }
+            let sum = price_val + walk_time_val + kickboard_time_val
+            price_val /= sum
+            walk_time_val /= sum
+            kickboard_time_val /= sum
+            try {
+                let response = await fetch("http://127.0.0.1/auth/new?id="+id+"&password="+pw+"&price="+price_val+"&walk_time="+walk_time_val+"&kickboard_time="+kickboard_time_val)
+                let result = await response.json()
+                if(response.ok) {
+                    alert("회원가입이 완료되었습니다.")
+                    history.back()
+                }
+                else {
+                    alert(result.message)
+                }
+            }
+            catch (error) {
+                console.log(error)
             }
         }
     </script>
@@ -42,17 +72,17 @@
             <input type="radio" name="price" value="mid">중요</input>
             <input type="radio" name="price" value="low">덜 중요</input>
         </div>
-        <h4>속도</h4>
+        <h4>킥보드를 타는 시간</h4>
         <div>
-            <input type="radio" name="price" value="high">매우 중요</input>
-            <input type="radio" name="price" value="mid">중요</input>
-            <input type="radio" name="price" value="low">덜 중요</input>
+            <input type="radio" name="kickboard_time" value="high">매우 중요</input>
+            <input type="radio" name="kickboard_time" value="mid">중요</input>
+            <input type="radio" name="kickboard_time" value="low">덜 중요</input>
         </div>
-        <h4>현재위치와 키보드와의 거리</h4>
+        <h4>걷는 시간</h4>
         <div>
-            <input type="radio" name="price" value="high">매우 중요</input>
-            <input type="radio" name="price" value="mid">중요</input>
-            <input type="radio" name="price" value="low">덜 중요</input>
+            <input type="radio" name="walk_time" value="high">매우 중요</input>
+            <input type="radio" name="walk_time" value="mid">중요</input>
+            <input type="radio" name="walk_time" value="low">덜 중요</input>
         </div>
         <br>
         <input type="button" onclick="signup()" value="회원가입"/>

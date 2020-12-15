@@ -29,15 +29,14 @@ class taste {
 }
 
 class user {
-    constructor(id, password, phonenumber, taste) {
+    constructor(id, password, taste) {
         this.id = id
         this.password = password
-        this.phonenumber = phonenumber
         this.taste = taste
     }
 }
 
-//회원가입 : 정보로 id(name), password, phonenumber, taste값을 받음.
+//회원가입 : 정보로 id(name), password, taste값을 받음.
 //이미 있는 사용자의 경우 가입 거절 : code 400
 router.get('/new', (req, res) => {
     database.ref("user").once("value").then((snapshot) => {
@@ -45,7 +44,7 @@ router.get('/new', (req, res) => {
             res.status(400).send({code: 400, message: "이미 존재하는 사용자입니다."})
         }
         else {
-            const usr = new user(req.query.id, req.query.password, req.query.phonenumber, new taste(req.query.kickboard_time, req.query.price, req.query.walk_time))
+            const usr = new user(req.query.id, req.query.password, new taste(req.query.kickboard_time, req.query.price, req.query.walk_time))
             database.ref("user/"+req.query.id).set(usr)
             res.status(200).send(usr)
             console.log("사용자 추가")

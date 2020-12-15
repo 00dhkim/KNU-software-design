@@ -48,6 +48,7 @@ async function getKickboard(usr_lat, usr_lon, dist) {
         for(const i in data) {
             if(distance(data[i].kickboard_pos_lat, data[i].kickboard_pos_lon, usr_lat, usr_lon, "meter") <= Number(dist)) {
                 data[i].company = company[j]
+                data[i].id = i
                 arr.push(data[i])
                 // console.log(arr)
             }

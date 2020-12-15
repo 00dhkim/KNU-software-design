@@ -13,12 +13,14 @@ import express from 'express'
 import authRouter from './router/auth.js'
 import userRouter from './router/user.js'
 import kickboardRouter from './router/kickboard.js'
+import cors from 'cors'
 import firebase from 'firebase'
 
 global.JWT_SECRET = "SoftwareDesign1Team"
 
 const app = express()
 
+app.use(cors())
 app.use('/auth', authRouter)
 app.use('/kickboard', kickboardRouter)
 app.use('/user', userRouter)
