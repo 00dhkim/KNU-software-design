@@ -6,10 +6,8 @@
 내가 DB와의 통신을 하는 경우는 없음, 전부 인자로 받아서 처리
 
 TODO:
-- 3가지 값의 단위 맞추기
 - 판단에 쓰이는 3가지 값 normalize 하기
 - user_taste 업데이트 하기
-- preference 설계하기
 
 단위
 - 가격: 원 (1000 ~ 5000)
@@ -97,7 +95,7 @@ def main_(argv):
     user_taste
     킥보드 정보들
     '''
-    # ERROR: user_taste와 킥보드의 id 종운이가 안넘겨줌;
+    
     user_pos = json.loads(argv[1])
     arrival_pos = json.loads(argv[2])
     kickboards_dicts = json.loads(argv[3])
@@ -142,6 +140,7 @@ def main_(argv):
     각 킥보드당 preference, price, kickboard_time, walk_time
     '''
 
+    # TODO: 리턴 형식 맞추기 (json)
     print(" company|id|  preference   |     price      | kickboard_time |   walk_time")
     for result in results:
         kickboard_id = result[1].id_
