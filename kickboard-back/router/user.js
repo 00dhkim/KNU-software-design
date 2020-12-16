@@ -31,8 +31,19 @@ router.get("/optimal", verifyToken, async (req, res) => {
     })
 })
 
-router.get("/usekickboard", verifyTokey, (req, res) => {
+router.get("/usekickboard", verifyTokey, async (req, res) => {
+    let snapshot = await database.ref("user/"+req.decode.id+"/taste").once("value")
+    const option = {
+        mode: 'text',
+        pythonPath: '',
+        pythonOptions: ['-u'],
+        scriptPath: '',
+        args: [req.query.price, req.query.kickboard_time, req.query.walk_time, JSON.stringify([snapshot.val().price, snapshot.val().kickboard_time, snapshot.val().walk_time])]
+    }
 
+    PythonShell.run('../python_calc/user_taste_update.py', option, (err, results) => {
+        res.send(results)
+    })
 })
 
 export default router
