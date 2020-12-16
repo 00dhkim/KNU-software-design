@@ -1,8 +1,9 @@
-FROM ubuntu:20.04
+FROM node:latest
 
-EXPOSE 80
-RUN apt update
-RUN apt install node
-COPY . /
-WORKDIR /
+WORKDIR /usr/src/app
+COPY package*.json ./
+RUN npm install
+COPY . .
+EXPOSE 4444
 CMD ["node", "index.js"]
+
