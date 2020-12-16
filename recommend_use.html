@@ -24,6 +24,69 @@
   </style>
 
   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAy7kmlOMSRM1lkU8GP8T605ciZu-uDABQ&callback=initMap"></script>
+
+  <script>
+  //킥보드 받아와서 띄우기
+  async function showAllKickboards(latitude, longitude)
+  {
+      const lat = latitude
+      const lon = longitude
+
+      try {
+          let response = await fetch("http://127.0.0.1/kickboard/location?lat=" + lat + "&lon=" + lon + "&dist=1000")
+          let result = await response.json()
+
+          for(let i = 0; i < result.length; ++i) {
+            var title = result[i].company + result[i].id
+            var pos= new google.maps.LatLng(result[i].kickboard_pos_lat, result[i].kickboard_pos_lon);
+
+            if(result[i].company === 'Beam') {
+              var m= new google.maps.Marker({
+                position: pos,
+                title: title,
+                icon: 'http://maps.google.com/mapfiles/ms/icons/purple-dot.png',
+                map: map
+              });
+            }
+            if(result[i].company === 'Gbike') {
+              var m= new google.maps.Marker({
+                position: pos,
+                title: title,
+                icon: 'http://maps.google.com/mapfiles/ms/icons/green-dot.png',
+                map: map
+              });
+            }
+            if(result[i].company === 'XingXing') {
+              var m= new google.maps.Marker({
+                position: pos,
+                title: title,
+                icon: 'http://maps.google.com/mapfiles/ms/icons/yellow-dot.png',
+                map: map
+              });
+            }
+
+            google.maps.event.addListener(m, 'click', (function(m, i) {
+              return function() {
+                infowindow.setContent('<div class="wrap">' + result[i].company + result[i].id + '</div>');
+                infowindow.open(map, m);
+              }
+            })(m, i));
+            if (m) {
+              m.addListener('click', function() {
+                map.setCenter(this.getPosition());
+                map.setZoom(16);
+              });
+            }
+          }
+
+      }
+      catch (error) {
+          console.log(error)
+      }
+  }
+
+  </script>
+
 </head>
 
 <body>
@@ -41,10 +104,13 @@
       mapTypeId: google.maps.MapTypeId.ROADMAP
     });
 
+    var latitude;
+    var longitude;
+
     //현재 위치 가져오기
     navigator.geolocation.watchPosition(function (position){
-      var latitude = position.coords.latitude;
-      var longitude = position.coords.longitude;
+      latitude = position.coords.latitude;
+      longitude = position.coords.longitude;
 
       //현재 위치로 center 맞추기
       initialLocation = new google.maps.LatLng(latitude, longitude);
@@ -57,6 +123,9 @@
         map: map
       });
 
+      showAllKickboards(latitude, longitude);
+
+/*
       //임의로 킥보드 위치 넣어놓음!!!!!!!!
       var beams=[
              ['빔1', 35.889163, 128.608486],
@@ -140,9 +209,10 @@
           });
         }
       }
-
+*/
       //선택한 곳 마킹하기
       var marker = null;
+      var arrival_location = null;
       google.maps.event.addListener(map, 'click', function(event) {
         placeMarker(event.latLng);
       })
@@ -150,13 +220,20 @@
         if(marker) {
           marker.setMap(null);
         }
-        
+
         marker = new google.maps.Marker({
           position: location,
           map: map
         });
         //센터 바꾸기
         map.setCenter(location);
+
+        var inputElement = document.getElementById("recom_btn1");
+        inputElement.addEventListener("click",  function visitPosition()
+          {
+            location.href = "top3.html?usr_lat="+latitude+"&use_lon="+longitude+"&arrival_lat="+location.lat()+"&arrival_lon"+location.lon()
+          }, false);
+
       }
 
       console.log('object');
@@ -168,7 +245,7 @@
 
   <div class="recom_btn_div">
     <p class="recom_txt">* 도착지를 선택하세요! *</p>
-    <input type='button' value='여기로 도착~' name="recom_btn1" class="recom_btn1" onclick="location.href='top3.html'"/>
+    <input id="recom_btn1" type='button' value='여기로 도착~' class="recom_btn1"/>
   </div>
 
 
