@@ -103,6 +103,7 @@ def main_(argv):
     kickboard_list = []
     for kickboard_raw in kickboards_dicts:
         kb = Kickboard()
+        # kb.id_ = kickboard_raw['id'] TEST:
         kb.battery = kickboard_raw['battery']
         kb.kickboard_pos = [kickboard_raw['kickboard_pos_lat'],\
                             kickboard_raw['kickboard_pos_lon']]
