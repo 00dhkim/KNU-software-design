@@ -66,20 +66,21 @@
 </head>
 <body class="body">
     <h1 class="login">Sign up</h1>
-    <div>
-    <div style="text-align: left;;">   
-        <a>이름</a>
-        <input type="text" id="name" name="name">
-        <br>
-        <a>ID</a>
-        <input type="text" id="id" name="id">
-        <br>
-        <a>PW</a>
-        <input type="password" id="pw" name="pw">
-
-        <h3>추천 서비스 이용을 위한 필수 항목</h3>
+    
+    <div style="text-align: center;">   
+        <div style="align-items: ;">
+            <a>이름</a>
+            <input type="text" id="name" name="name">
+            <br>
+            <a>ID</a>
+            <input type="text" id="id" name="id">
+            <br>
+            <a>PW</a>
+            <input type="password" id="pw" name="pw">
+        </div>
+        <h3 style="color: white;">추천 서비스 이용을 위한 필수 항목</h3>
         <h4>가격</h4>
-        <div>
+        <div  >
             <input type="radio" name="price" value="high">매우 중요</input>
             <input type="radio" name="price" value="mid">중요</input>
             <input type="radio" name="price" value="low">덜 중요</input>
@@ -97,7 +98,7 @@
             <input type="radio" name="walk_time" value="low">덜 중요</input>
         </div>
         <br>
-        <input type="button" onclick="signup()" value="회원가입"/>
+        <input class="signup_btn" type="button" onclick="signup()" value="회원가입"/>
     </div>
     
     <div>
