@@ -51,6 +51,23 @@
   
 }
 
+.goback_btn {
+  border-radius: 10px;
+  margin-left: 50px;
+  color: rgb(255, 255, 255);
+  background-color: rgb(38, 58, 116);
+  font-family: TmoneyRoundWindExtraBold;
+  border: none;
+}
+
+.infobox {
+  border-radius: 10px;
+  background-color: white;
+  width: fit-content;
+  height: fit-content;
+
+}
+
 .list {
     font-family: TmoneyRoundWindExtraBold;
 }
