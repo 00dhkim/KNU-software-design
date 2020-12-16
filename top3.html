@@ -24,61 +24,87 @@
      }
   </style>
 
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAy7kmlOMSRM1lkU8GP8T605ciZu-uDABQ&callback=initMap"></script>
+
   <script>
-    async function showAllKickboards(latitude, longtitue)
-    {
-      const lat = latitude;
-      const lon = longtitue;
-      try {
-        let response = await fetch("http://127.0.0.1:4444/user/optimal?usr_lat=" + lat + "&usr_lon=" + lon + "&arrival_lat=" + arr_lat + "&arrival_lon" + arr_lon, {
-          headers: {
-            authorization: 
-          }
-        })
-        let re = await response.json()
+  function getParam(sname) {
+      var params = location.search.substr(location.search.indexOf("?") + 1);
+      var sval = "";
 
-        for (let i=0;i<res.length;i++)
-        {
-          var title = res.company + res[i].id
-          var pos = new gogle.maps.LatLng(res[i].kickboard_pos_lat, res[i].kickboard_pos_lon);
-
-          if (res[i].company==='Beam')
-          {
-            var m = new gogle.maps.Marker({
-              position:pos,
-              title: title ,
-              icon:'http://maps.google.com/mapfiles/ms/icons/purple-dot.png',
-              map: map
-            });
-          }
-          
-          if (res[i].company==='Gbke')
-          {
-            var m = new gogle.maps.Marker({
-              position:pos,
-              title: title ,
-              icon:'http://maps.google.com/mapfiles/ms/icons/green-dot.png',
-              map: map
-            });
-          }
-
-          if (res[i].company==='XingXing')
-          {
-            var m = new gogle.maps.Marker({
-              position:pos,
-              title: title ,
-              icon:'http://maps.google.com/mapfiles/ms/icons/yellow-dot.png',
-              map: map
-            });
-          }
-        }
-        
+      params = params.split("&");
+      for (var i = 0; i < params.length; i++) {
+          temp = params[i].split("=");
+          if ([temp[0]] == sname) { sval = temp[1]; }
       }
+      return sval;
+  }
 
-    }
+  async function showAllKickboards()
+  {
+      try {
+        const lat = getParam("usr_lat");
+        const lon = getParam("usr_lon");
+        const arrival_lat = getParam("arrival_lat");
+        const arrival_lon = getParam("arrival_lon");
+
+        let response = await fetch("http://wiki.skeep.me:3000/user/optimal?usr_lat=" + lat + "&usr_lon=" + lon + "&arrival_lat=" + arrival_lat + "&arrival_lon=" + arrival_lon)
+        let result = await response.json()
+
+          for(let i = 0; i < result.length; ++i) {
+            var title = result[i].company + result[i].id
+            var pos= new google.maps.LatLng(result[i].kickboard_pos_lat, result[i].kickboard_pos_lon);
+
+            if(result[i].company === 'Beam') {
+              var m= new google.maps.Marker({
+                position: pos,
+                title: title,
+                icon: 'http://maps.google.com/mapfiles/ms/icons/purple-dot.png',
+                map: map
+              });
+            }
+            if(result[i].company === 'Gbike') {
+              var m= new google.maps.Marker({
+                position: pos,
+                title: title,
+                icon: 'http://maps.google.com/mapfiles/ms/icons/green-dot.png',
+                map: map
+              });
+            }
+            if(result[i].company === 'XingXing') {
+              var m= new google.maps.Marker({
+                position: pos,
+                title: title,
+                icon: 'http://maps.google.com/mapfiles/ms/icons/yellow-dot.png',
+                map: map
+              });
+            }
+
+            google.maps.event.addListener(m, 'click', (function(m, i) {
+              return function() {
+                infowindow.setContent('<div class="wrap">' + recommed_kickboards[i][0] + '순위</br>' + recommed_kickboards[i][1]
+                                        + '</br>id : ' + recommed_kickboards[i][2] + '</br></br>가격 : ' + recommed_kickboards[i][3]
+                                        + '원</br>이동 거리 : ' + recommed_kickboards[i][4] + 'm</br>이동 시간 : ' + recommed_kickboards[i][5]
+                                        + '초</br>걷는 시간' + recommed_kickboards[i][6] + '초</br>' + '</div>');
+                infowindow.open(map, m);
+                selected_kickboard = recommed_kickboards[i][1] + recommed_kickboards[i][2];
+              }
+            })(m, i));
+            if (m) {
+              m.addListener('click', function() {
+                map.setCenter(this.getPosition());
+                map.setZoom(16);
+              });
+            }
+
+          }
+
+      }
+      catch (error) {
+          console.log(error)
+      }
+  }
   </script>
 
-  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAy7kmlOMSRM1lkU8GP8T605ciZu-uDABQ&callback=initMap"></script>
 </head>
 
 <body>
@@ -112,10 +138,9 @@
         map: map
       });
 
-      showAllKickboards(latitude, longitude)
 
       //임의로 킥보드 위치 넣어놓음!!!!!!!!
-/*      var recommed_kickboards=[ //순위, 회사이름, id, 가격, 거리, 이동시간, 걷는시간, 위치
+      var recommed_kickboards=[ //순위, 회사이름, id, 가격, 거리, 이동시간, 걷는시간, 위치
              [1, 'beam', 2, 1000, 300, 600, 20, 35.887163, 128.607956],
              [2, 'beam', 1, 1100, 350, 650, 40, 35.889163, 128.608486],
              [3, 'xingxing', 1, 1500, 400, 700, 60, 35.887163, 128.609956]
@@ -123,7 +148,7 @@
 
       var selected_kickboard = null;
 
-      //지도에 킥보드들 마킹하기
+    /*  //지도에 킥보드들 마킹하기
       for(var i = 0; i < recommed_kickboards.length; i++){
         //var title = recommed_kickboards[i][0];
         var pos= new google.maps.LatLng(recommed_kickboards[i][7], recommed_kickboards[i][8]);
@@ -149,7 +174,7 @@
             map: map
           });
         }
-*/
+
         //클릭하면 해당 킥보드 정보 뜨게하기!
         google.maps.event.addListener(m, 'click', (function(m, i) {
           return function() {
@@ -167,7 +192,7 @@
             map.setZoom(16);
           });
         }
-      }
+      }*/
 
 
       console.log('object');
