@@ -2,8 +2,10 @@
 <html>
 <head>
     <link rel="stylesheet" href="main.css"/>
+    
     <meta charset="UTF-8">
     <title>Login</title>
+    
     <script>
         async function login() {
             const id = document.getElementById("id").value
@@ -21,24 +23,27 @@
     </script>
 </head>
 <body class="body">
-    <h1 class="login">Login</h1>
-    <span style="display: inline-flex;">
-        <span>
+    <img style="margin-top: 80px;" src="logo4.png" width="300px", height="240px">
+    <!--<h4 class="login" >Login</h4>-->
+    <br>
+    <br>
+    <div style="display: inline-flex; vertical-align: middle;" >
+        <div class="list" style="text-align: right;">
             <a>ID</a>
-            <input id="id" type="text">
+            <input class="login_box"id="id" type="text">
             
             <br>
             <a>PW</a>
-            <input id="password" type="password">
-        </span>
-        <span>
-            <input class="login_btn" type="button" value="로그인" onclick="login()"/>
-        </span>
-    </span>
+            <input  class="login_box" id="password" type="password">
+        </div>
+        <div style="margin-left: 3px;">
+            <input class="login_btn" type="button" value="LOGIN" onclick="login()"/>
+        </div>
+    </div>
     
     <div>
         <br>
-        <a onclick="location.href='signup.html'">회원가입</a>
+        <a  class="list" style="color: white;" onclick="location.href='signup.html'">회원가입</a>
     </div>
 
 </body>
