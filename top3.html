@@ -65,6 +65,8 @@
              [3, 'xingxing', 1, 1500, 400, 700, 60, 35.887163, 128.609956]
       ];
 
+      var selected_kickboard = null;
+
       //지도에 킥보드들 마킹하기
       for(var i = 0; i < recommed_kickboards.length; i++){
         //var title = recommed_kickboards[i][0];
@@ -92,6 +94,7 @@
           });
         }
 
+        //클릭하면 해당 킥보드 정보 뜨게하기!
         google.maps.event.addListener(m, 'click', (function(m, i) {
           return function() {
             infowindow.setContent('<div class="wrap">' + recommed_kickboards[i][0] + '순위</br>' + recommed_kickboards[i][1]
@@ -99,6 +102,7 @@
                                     + '원</br>이동 거리 : ' + recommed_kickboards[i][4] + 'm</br>이동 시간 : ' + recommed_kickboards[i][5]
                                     + '초</br>걷는 시간' + recommed_kickboards[i][6] + '초</br>' + '</div>');
             infowindow.open(map, m);
+            selected_kickboard = recommed_kickboards[i][1] + recommed_kickboards[i][2];
           }
         })(m, i));
         if (m) {
@@ -117,13 +121,13 @@
 
   </script>
 
-  <div class="map_btn_div">
-    <input type='button' value='이용하기!' name="map_btn2" class="map_btn2" />
+  <div class="recom_btn_div">
+    <p class="recom_txt">* 추천하는 3개의 킥보드입니다! *</p>
+    <input type='button' value='이용하기!' name="recom_btn1" class="recom_btn1"/>
   </div>
 
 
 </body>
-
 
 
 </html>
