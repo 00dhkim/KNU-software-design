@@ -8,13 +8,14 @@ import firebase from 'firebase'
 import verifyToken from '../middleware/token.js'
 import { PythonShell } from 'python-shell'
 import { getKickboard } from './kickboard.js'
+import { verify } from 'jsonwebtoken'
 
 const router = express.Router()
 const database = firebase.database()
 
 // 최적 킥보드를 계산 후 리턴 and DB에는 유저 선호도 값 update
 router.get("/optimal", verifyToken, async (req, res) => {
-    let snapshot = await database.ref("user/"+req.decode.id).once("value")
+    let snapshot = await database.ref("user/"+req.decode.id+"/taste").once("value")
     let kickboard = await getKickboard(Number(req.query.usr_lat), Number(req.query.usr_lon), 100)
     const option = {
         mode: 'text',
@@ -28,6 +29,10 @@ router.get("/optimal", verifyToken, async (req, res) => {
     PythonShell.run('router/test.py', option, (err, results) => {
         res.send(results)
     })
+})
+
+router.get("/usekickboard", verifyTokey, (req, res) => {
+
 })
 
 export default router
