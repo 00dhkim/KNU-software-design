@@ -29,4 +29,6 @@ def main_(price, kickboard_time, walk_time, user_taste):
 if __name__ == '__main__':
     print("user_taste_update executed")
     print(sys.argv)
+    
+    
 

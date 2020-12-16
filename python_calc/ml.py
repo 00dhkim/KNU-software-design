@@ -69,7 +69,6 @@ def main_kickboard_procedure(kickboard, user_pos, arrival_pos, user_taste):
             calc_distence(user_pos, kickboard.kickboard_pos, arrival_pos)
 
     if kickboard_distence > kickboard.max_kickboard_distence:
-        print(kickboard_distence, kickboard.max_kickboard_distence)
         return -1 # 배터리 부족해서 못 가는 상황
 
     walk_time = walk_distence / (4 * 1000 / 3600) # 4 km/s
@@ -129,7 +128,6 @@ def main_(argv):
     for kickboard in kickboard_list:
         ret = main_kickboard_procedure(kickboard, user_pos, arrival_pos, user_taste)
         if ret == -1: # 배터리가 없어서 멀리 못가는 상황
-            print(kickboard)
             continue
         (preference, price, kickboard_time, walk_time) = ret
         results.append((preference, kickboard, price, kickboard_time, walk_time))
@@ -156,16 +154,13 @@ def main_(argv):
         # 순위, 회사이름, id, 가격, 이동시간, 걷는시간, 킥보드위도, 킥보드경도
         rank += 1
         print("[%d, %s, %d, %d, %d, %d, %lf, %lf]"%(rank, company, kickboard_id, price, kickboard_time, walk_time, result[1].kickboard_pos[0], result[1].kickboard_pos[1]), end='')
-        if(rank != 3):
-            print(", ",'')
+        if(result != results[-1]):
+            print(", ",end='')
     print("]", end='')
-
-    print(results)
 
 
 if __name__ == '__main__':
-    print("python program executed")
     argv = ['router/test.py', '[37.43241,127.65321]', '[37.43,127.65]', '[{\"battery\":100,\"isAvailable\":true,\"kickboard_pos_lat\":37.43523,\"kickboard_pos_lon\":127.53225,\"max_kickboard_distance\":20,\"company\":\"Beam\"},{\"battery\":78,\"isAvailable\":true,\"kickboard_pos_lat\":37.87643,\"kickboard_pos_lon\":127.53213,\"max_kickboard_distance\":21,\"company\":\"XingXing\"},{\"battery\":90,\"isAvailable\":true,\"kickboard_pos_lat\":37.43241,\"kickboard_pos_lon\":127.65321,\"max_kickboard_distance\":32,\"company\":\"Gbike\"}]']
-    print(sys.argv)
+    # print(sys.argv)
     main_(argv)
 
