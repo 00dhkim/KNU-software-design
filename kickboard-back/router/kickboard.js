@@ -60,8 +60,9 @@ async function getKickboard(usr_lat, usr_lon, dist) {
 
 //현재 위치 (위도, 경도)와 거리를 받아서 거리 안에 있는 전동 킥보드 배열 리턴
 //lat: 위도, lon: 경도, dist: 거리(meter)
-router.get('/location', (req, res) => {
-    res.send(getKickboard(req.query.lat, req.query.lon, req.query.dist))
+router.get('/location', async (req, res) => {
+    let kickboard = await getKickboard(req.query.lat, req.query.lon, req.query.dist)
+    res.send(kickboard)
 })
 
 //회사와 킥보드 id를 받아서 정보 리턴

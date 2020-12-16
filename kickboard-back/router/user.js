@@ -45,4 +45,9 @@ router.get("/usekickboard", verifyToken, async (req, res) => {
     })
 })
 
+router.get("/info", verifyToken, async (req, res) => {
+    let snapshot = await database.ref("user/"+req.decode.id).once("value")
+    res.send(snapshot.val())
+})
+
 export default router
