@@ -8,7 +8,6 @@ import firebase from 'firebase'
 import verifyToken from '../middleware/token.js'
 import { PythonShell } from 'python-shell'
 import { getKickboard } from './kickboard.js'
-import { verify } from 'jsonwebtoken'
 
 const router = express.Router()
 const database = firebase.database()
@@ -31,7 +30,7 @@ router.get("/optimal", verifyToken, async (req, res) => {
     })
 })
 
-router.get("/usekickboard", verifyTokey, async (req, res) => {
+router.get("/usekickboard", verifyToken, async (req, res) => {
     let snapshot = await database.ref("user/"+req.decode.id+"/taste").once("value")
     const option = {
         mode: 'text',
@@ -44,6 +43,11 @@ router.get("/usekickboard", verifyTokey, async (req, res) => {
     PythonShell.run('../python_calc/user_taste_update.py', option, (err, results) => {
         res.send(results)
     })
+})
+
+router.get("/info", verifyToken, async (req, res) => {
+    let snapshot = await database.ref("user/"+req.decode.id).once("value")
+    res.send(snapshot.val())
 })
 
 export default router
