@@ -69,6 +69,7 @@ def main_kickboard_procedure(kickboard, user_pos, arrival_pos, user_taste):
             calc_distence(user_pos, kickboard.kickboard_pos, arrival_pos)
 
     if kickboard_distence > kickboard.max_kickboard_distence:
+        print(kickboard_distence, kickboard.max_kickboard_distence)
         return -1 # 배터리 부족해서 못 가는 상황
 
     walk_time = walk_distence / (4 * 1000 / 3600) # 4 km/s
@@ -128,6 +129,7 @@ def main_(argv):
     for kickboard in kickboard_list:
         ret = main_kickboard_procedure(kickboard, user_pos, arrival_pos, user_taste)
         if ret == -1: # 배터리가 없어서 멀리 못가는 상황
+            print(kickboard)
             continue
         (preference, price, kickboard_time, walk_time) = ret
         results.append((preference, kickboard, price, kickboard_time, walk_time))
@@ -140,9 +142,9 @@ def main_(argv):
     각 킥보드당 preference, price, kickboard_time, walk_time
     '''
 
-    # TODO: 리턴 형식 맞추기 (json)
-    print(" company|id|  preference   |     price      | kickboard_time |   walk_time")
-    for result in results:
+    print("[",end='')
+    rank = 0
+    for result in results[:3]:
         kickboard_id = result[1].id_
         company = result[1].company
         preference = result[0]
@@ -150,8 +152,15 @@ def main_(argv):
         kickboard_time = result[3]
         walk_time = result[4]
 
-        print("%8s|%2d|%+3.12lf|%3.12lf|%+3.12lf|%+3.12lf|%+3.12lf|%+3.12lf"%(company, kickboard_id, preference, price, kickboard_time, walk_time, result[1].kickboard_pos[0], result[1].kickboard_pos[1]))
+        # TODO: 리턴 형식 맞추기 (json)
+        # 순위, 회사이름, id, 가격, 이동시간, 걷는시간, 킥보드위도, 킥보드경도
+        rank += 1
+        print("[%d, %s, %d, %d, %d, %d, %lf, %lf]"%(rank, company, kickboard_id, price, kickboard_time, walk_time, result[1].kickboard_pos[0], result[1].kickboard_pos[1]), end='')
+        if(rank != 3):
+            print(", ",'')
+    print("]", end='')
 
+    print(results)
 
 
 if __name__ == '__main__':
