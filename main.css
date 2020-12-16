@@ -62,3 +62,31 @@
   font-family: TmoneyRoundWindExtraBold;
   font-size: 14px;
 }
+
+.recom_btn_div {
+  text-align: center;
+  /*line-height: 50px;*/
+  height: 150px;
+  background-color: rgb(250, 120, 60);
+}
+
+.recom_btn1 {
+  margin-top: 7%;
+  margin-right:21px;
+  padding: 13px 18px;
+  border-radius: 35px;
+
+  background-color: #2B2802;
+  border: none;
+  color: #fff;
+  font-family: TmoneyRoundWindExtraBold;
+  font-size: 13px;
+}
+
+.recom_txt {
+  color: #fff;
+  line-height: 50px;
+  font-family: TmoneyRoundWindExtraBold;
+  font-size: 20px;
+}
+
