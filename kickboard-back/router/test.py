@@ -161,7 +161,8 @@ def main_(argv):
 
 
 if __name__ == '__main__':
-    argv = ['router/test.py', '[37.43241,127.65321]', '[37.43,127.65]', '[{\"battery\":100,\"isAvailable\":true,\"kickboard_pos_lat\":37.43523,\"kickboard_pos_lon\":127.53225,\"max_kickboard_distance\":20,\"company\":\"Beam\"},{\"battery\":78,\"isAvailable\":true,\"kickboard_pos_lat\":37.87643,\"kickboard_pos_lon\":127.53213,\"max_kickboard_distance\":21,\"company\":\"XingXing\"},{\"battery\":90,\"isAvailable\":true,\"kickboard_pos_lat\":37.43241,\"kickboard_pos_lon\":127.65321,\"max_kickboard_distance\":32,\"company\":\"Gbike\"}]']
+    argv = sys.argv
+    #argv = ['router/test.py', '[37.43241,127.65321]', '[37.43,127.65]', '[{\"battery\":100,\"isAvailable\":true,\"kickboard_pos_lat\":37.43523,\"kickboard_pos_lon\":127.53225,\"max_kickboard_distance\":20,\"company\":\"Beam\"},{\"battery\":78,\"isAvailable\":true,\"kickboard_pos_lat\":37.87643,\"kickboard_pos_lon\":127.53213,\"max_kickboard_distance\":21,\"company\":\"XingXing\"},{\"battery\":90,\"isAvailable\":true,\"kickboard_pos_lat\":37.43241,\"kickboard_pos_lon\":127.65321,\"max_kickboard_distance\":32,\"company\":\"Gbike\"}]']
     # print(sys.argv)
     main_(argv)
 
