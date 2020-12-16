@@ -26,6 +26,6 @@ app.use('/auth', authRouter)
 app.use('/kickboard', kickboardRouter)
 app.use('/user', userRouter)
 
-const server = app.listen(4444, () => {
+const server = app.listen(3000, () => {
     console.log('start')
 })

@@ -10,6 +10,12 @@
         {
             history.back();
         }
+        async function getName()
+        {
+            let fc = await fetch("http://wiki.skeep.me:3000/user/info")
+            let response = await fc.json()
+            
+        }
     </script>
 </head>
 <body class="body">

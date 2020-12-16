@@ -32,7 +32,7 @@
       const lon = longitude
 
       try {
-          let response = await fetch("http://127.0.0.1:4444/kickboard/location?lat=" + lat + "&lon=" + lon + "&dist=1000")
+          let response = await fetch("http://wiki.skeep.me:3000/kickboard/location?lat=" + lat + "&lon=" + lon + "&dist=1000")
           let result = await response.json()
 
           for(let i = 0; i < result.length; ++i) {
