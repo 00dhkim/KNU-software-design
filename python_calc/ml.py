@@ -6,10 +6,8 @@
 내가 DB와의 통신을 하는 경우는 없음, 전부 인자로 받아서 처리
 
 TODO:
-- 3가지 값의 단위 맞추기
 - 판단에 쓰이는 3가지 값 normalize 하기
 - user_taste 업데이트 하기
-- preference 설계하기
 
 단위
 - 가격: 원 (1000 ~ 5000)
@@ -27,13 +25,13 @@ class Kickboard:
         self.id_ = -1
         self.battery = 0
         self.kickboard_pos = [0, 0]
-        self.max_kickboard_distence = [0, 0] # TODO: km 인가, m 인가?
+        self.max_kickboard_distence = 0
         self.company = "NULL"
         self.isAvailable = False
 
 
 def calc_price(company, kickboard_time):
-    kickboard_time = kickboard_time / 60 + 1 # 이 함수 내에서만 분 단위로 계산
+    kickboard_time = kickboard_time // 60 + 1 # 이 함수 내에서만 분 단위로 계산
     if company == 'Gbike':
         return 450 + 150 * kickboard_time
     elif company == 'XingXing':
@@ -42,10 +40,10 @@ def calc_price(company, kickboard_time):
         return 600 + 180 * kickboard_time
 
 def latitude_to_meter(latitude): # 위도, x
-    return latitude / 109.958489129649955 / 1000
+    return latitude * 109.958489129649955 * 1000
 
 def longitude_to_meter(longitude): # 경도, y
-    return longitude / 99.74 / 1000 
+    return longitude * 99.74 * 1000 
 
 def calc_distence(user_pos, kickboard_pos, arrival_pos):
     walk_distence = ((latitude_to_meter(user_pos[0] - kickboard_pos[0]))**2 + \
@@ -60,9 +58,9 @@ def get_kickboard_speed(company):
     if company == 'Gbike':
         return 20 * 1000 / 3600
     elif company == 'XingXing':
-        return -1 # TODO:
+        return 25 * 1000 / 3600 # TODO:
     elif company == 'Beam':
-        return -1 # TODO:
+        return 25 * 1000 / 3600 # TODO:
 
 
 # 킥보드 하나에 대한 연산을 수행하고 리턴
@@ -88,7 +86,6 @@ def main_kickboard_procedure(kickboard, user_pos, arrival_pos, user_taste):
 
 def main_(argv):
     
-    print("step 1.2.")
     ### step 1. get arguments from backend
     ### step 2. get kickboard list
     '''
@@ -98,7 +95,7 @@ def main_(argv):
     user_taste
     킥보드 정보들
     '''
-    # ERROR: user_taste와 킥보드의 id 종운이가 안넘겨줌;
+    
     user_pos = json.loads(argv[1])
     arrival_pos = json.loads(argv[2])
     kickboards_dicts = json.loads(argv[3])
@@ -109,7 +106,7 @@ def main_(argv):
         kb.battery = kickboard_raw['battery']
         kb.kickboard_pos = [kickboard_raw['kickboard_pos_lat'],\
                             kickboard_raw['kickboard_pos_lon']]
-        kb.max_kickboard_distence = kickboard_raw['max_kickboard_distance']
+        kb.max_kickboard_distence = kickboard_raw['max_kickboard_distance'] * 1000
         kb.company = kickboard_raw['company']
         kb.isAvailable = kickboard_raw['isAvailable']
 
@@ -117,7 +114,6 @@ def main_(argv):
 
     user_taste = [0.3, 0.2, 0.5] # TEST:
 
-    print("step 3.4.")
     ### step 3, 4. calculate preference about a kickboard
     ###            and generate result list
     # (kickboard, preference, price, kickboard_time, walk_time)
@@ -130,20 +126,22 @@ def main_(argv):
 
     results = []
     for kickboard in kickboard_list:
-        (preference, price, kickboard_time, walk_time) = \
-            main_kickboard_procedure(kickboard, user_pos, arrival_pos, user_taste)
+        ret = main_kickboard_procedure(kickboard, user_pos, arrival_pos, user_taste)
+        if ret == -1: # 배터리가 없어서 멀리 못가는 상황
+            continue
+        (preference, price, kickboard_time, walk_time) = ret
         results.append((preference, kickboard, price, kickboard_time, walk_time))
     
     results.sort(reverse=True) # preference 큰 순으로 정렬
     
-    print("step 5.")
     ### step 5. update user_taste and return all
     '''
     반환해야할 값들
     각 킥보드당 preference, price, kickboard_time, walk_time
     '''
 
-    print("company|kickboard_id|preference|price|kickboard_time|walk_time")
+    # TODO: 리턴 형식 맞추기 (json)
+    print(" company|id|  preference   |     price      | kickboard_time |   walk_time")
     for result in results:
         kickboard_id = result[1].id_
         company = result[1].company
@@ -152,12 +150,13 @@ def main_(argv):
         kickboard_time = result[3]
         walk_time = result[4]
 
-        print(company, kickboard_id, preference, price, kickboard_time, walk_time, sep='|')
+        print("%8s|%2d|%+3.12lf|%3.12lf|%+3.12lf|%+3.12lf|%+3.12lf|%+3.12lf"%(company, kickboard_id, preference, price, kickboard_time, walk_time, result[1].kickboard_pos[0], result[1].kickboard_pos[1]))
 
 
 
 if __name__ == '__main__':
     print("python program executed")
     argv = ['router/test.py', '[37.43241,127.65321]', '[37.43,127.65]', '[{\"battery\":100,\"isAvailable\":true,\"kickboard_pos_lat\":37.43523,\"kickboard_pos_lon\":127.53225,\"max_kickboard_distance\":20,\"company\":\"Beam\"},{\"battery\":78,\"isAvailable\":true,\"kickboard_pos_lat\":37.87643,\"kickboard_pos_lon\":127.53213,\"max_kickboard_distance\":21,\"company\":\"XingXing\"},{\"battery\":90,\"isAvailable\":true,\"kickboard_pos_lat\":37.43241,\"kickboard_pos_lon\":127.65321,\"max_kickboard_distance\":32,\"company\":\"Gbike\"}]']
+    print(sys.argv)
     main_(argv)
 
