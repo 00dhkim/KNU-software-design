@@ -24,6 +24,60 @@
      }
   </style>
 
+  <script>
+    async function showAllKickboards(latitude, longtitue)
+    {
+      const lat = latitude;
+      const lon = longtitue;
+      try {
+        let response = await fetch("http://127.0.0.1:4444/user/optimal?usr_lat=" + lat + "&usr_lon=" + lon + "&arrival_lat=" + arr_lat + "&arrival_lon" + arr_lon, {
+          headers: {
+            authorization: 
+          }
+        })
+        let re = await response.json()
+
+        for (let i=0;i<res.length;i++)
+        {
+          var title = res.company + res[i].id
+          var pos = new gogle.maps.LatLng(res[i].kickboard_pos_lat, res[i].kickboard_pos_lon);
+
+          if (res[i].company==='Beam')
+          {
+            var m = new gogle.maps.Marker({
+              position:pos,
+              title: title ,
+              icon:'http://maps.google.com/mapfiles/ms/icons/purple-dot.png',
+              map: map
+            });
+          }
+          
+          if (res[i].company==='Gbke')
+          {
+            var m = new gogle.maps.Marker({
+              position:pos,
+              title: title ,
+              icon:'http://maps.google.com/mapfiles/ms/icons/green-dot.png',
+              map: map
+            });
+          }
+
+          if (res[i].company==='XingXing')
+          {
+            var m = new gogle.maps.Marker({
+              position:pos,
+              title: title ,
+              icon:'http://maps.google.com/mapfiles/ms/icons/yellow-dot.png',
+              map: map
+            });
+          }
+        }
+        
+      }
+
+    }
+  </script>
+
   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAy7kmlOMSRM1lkU8GP8T605ciZu-uDABQ&callback=initMap"></script>
 </head>
 
@@ -58,8 +112,10 @@
         map: map
       });
 
+      showAllKickboards(latitude, longitude)
+
       //임의로 킥보드 위치 넣어놓음!!!!!!!!
-      var recommed_kickboards=[ //순위, 회사이름, id, 가격, 거리, 이동시간, 걷는시간, 위치
+/*      var recommed_kickboards=[ //순위, 회사이름, id, 가격, 거리, 이동시간, 걷는시간, 위치
              [1, 'beam', 2, 1000, 300, 600, 20, 35.887163, 128.607956],
              [2, 'beam', 1, 1100, 350, 650, 40, 35.889163, 128.608486],
              [3, 'xingxing', 1, 1500, 400, 700, 60, 35.887163, 128.609956]
@@ -93,7 +149,7 @@
             map: map
           });
         }
-
+*/
         //클릭하면 해당 킥보드 정보 뜨게하기!
         google.maps.event.addListener(m, 'click', (function(m, i) {
           return function() {
