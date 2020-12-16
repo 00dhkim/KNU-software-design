@@ -103,6 +103,7 @@ def main_(argv):
     kickboard_list = []
     for kickboard_raw in kickboards_dicts:
         kb = Kickboard()
+        # kb.id_ = kickboard_raw['id'] TEST:
         kb.battery = kickboard_raw['battery']
         kb.kickboard_pos = [kickboard_raw['kickboard_pos_lat'],\
                             kickboard_raw['kickboard_pos_lon']]
@@ -140,9 +141,9 @@ def main_(argv):
     각 킥보드당 preference, price, kickboard_time, walk_time
     '''
 
-    # TODO: 리턴 형식 맞추기 (json)
-    print(" company|id|  preference   |     price      | kickboard_time |   walk_time")
-    for result in results:
+    print("[",end='')
+    rank = 0
+    for result in results[:3]:
         kickboard_id = result[1].id_
         company = result[1].company
         preference = result[0]
@@ -150,13 +151,18 @@ def main_(argv):
         kickboard_time = result[3]
         walk_time = result[4]
 
-        print("%8s|%2d|%+3.12lf|%3.12lf|%+3.12lf|%+3.12lf|%+3.12lf|%+3.12lf"%(company, kickboard_id, preference, price, kickboard_time, walk_time, result[1].kickboard_pos[0], result[1].kickboard_pos[1]))
-
+        # TODO: 리턴 형식 맞추기 (json)
+        # 순위, 회사이름, id, 가격, 이동시간, 걷는시간, 킥보드위도, 킥보드경도
+        rank += 1
+        print("[%d, %s, %d, %d, %d, %d, %lf, %lf]"%(rank, company, kickboard_id, price, kickboard_time, walk_time, result[1].kickboard_pos[0], result[1].kickboard_pos[1]), end='')
+        if(result != results[-1]):
+            print(", ",end='')
+    print("]", end='')
 
 
 if __name__ == '__main__':
-    print("python program executed")
-    argv = ['router/test.py', '[37.43241,127.65321]', '[37.43,127.65]', '[{\"battery\":100,\"isAvailable\":true,\"kickboard_pos_lat\":37.43523,\"kickboard_pos_lon\":127.53225,\"max_kickboard_distance\":20,\"company\":\"Beam\"},{\"battery\":78,\"isAvailable\":true,\"kickboard_pos_lat\":37.87643,\"kickboard_pos_lon\":127.53213,\"max_kickboard_distance\":21,\"company\":\"XingXing\"},{\"battery\":90,\"isAvailable\":true,\"kickboard_pos_lat\":37.43241,\"kickboard_pos_lon\":127.65321,\"max_kickboard_distance\":32,\"company\":\"Gbike\"}]']
-    print(sys.argv)
+    argv = sys.argv
+    #argv = ['router/test.py', '[37.43241,127.65321]', '[37.43,127.65]', '[{\"battery\":100,\"isAvailable\":true,\"kickboard_pos_lat\":37.43523,\"kickboard_pos_lon\":127.53225,\"max_kickboard_distance\":20,\"company\":\"Beam\"},{\"battery\":78,\"isAvailable\":true,\"kickboard_pos_lat\":37.87643,\"kickboard_pos_lon\":127.53213,\"max_kickboard_distance\":21,\"company\":\"XingXing\"},{\"battery\":90,\"isAvailable\":true,\"kickboard_pos_lat\":37.43241,\"kickboard_pos_lon\":127.65321,\"max_kickboard_distance\":32,\"company\":\"Gbike\"}]']
+    # print(sys.argv)
     main_(argv)
 
