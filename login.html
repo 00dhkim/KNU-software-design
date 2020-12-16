@@ -10,7 +10,7 @@
         async function login() {
             const id = document.getElementById("id").value
             const password = document.getElementById("password").value
-            let response = await fetch("http://127.0.0.1:4444/auth/login?id="+id+"&password="+password)
+            let response = await fetch("http://wiki.skeep.me:3000/auth/login?id="+id+"&password="+password)
             const pharse = await response.json()
             if(response.ok) {
                 localStorage.setItem('jwt-token', pharse)
