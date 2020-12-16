@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="main.css" />
+  <title>google map</title>
+
+  <style>
+    * {margin: 0; padding: 0;}
+    html, body { height: 100%}
+    #map {
+      height: 450px;
+    }
+    div.wrap {
+       width: 150px;
+       text-align: center;
+       margin: 5px auto 0;
+       height: 130px;
+       overflow: hidden;
+    }
+    /* 확대/축소 등 구글 지도의 기본 UI 감추기 */
+    .gmnoprint {
+       display: none;
+     }
+  </style>
+
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAy7kmlOMSRM1lkU8GP8T605ciZu-uDABQ&callback=initMap"></script>
+</head>
+
+<body>
+  <div id="map"></div>
+  <script>
+    //현재 위치 마커 이미지
+    var customicon = 'http://drive.google.com/uc?export=view&id=1tZgPtboj4mwBYT6cZlcY36kYaQDR2bRM';
+    //인포윈도우
+    var infowindow = new google.maps.InfoWindow();
+    //지도 생성
+    var element = document.getElementById('map');
+    var map = new google.maps.Map(element, {
+      zoom:16,
+      center: new google.maps.LatLng(37, 126),
+      mapTypeId: google.maps.MapTypeId.ROADMAP
+    });
+
+    //현재 위치 가져오기
+    navigator.geolocation.watchPosition(function (position){
+      var latitude = position.coords.latitude;
+      var longitude = position.coords.longitude;
+
+      //현재 위치로 center 맞추기
+      initialLocation = new google.maps.LatLng(latitude, longitude);
+      map.setCenter(initialLocation);
+
+      //현재 위치 마킹하기
+      new google.maps.Marker({
+        position: new google.maps.LatLng(latitude, longitude),
+        icon: customicon,
+        map: map
+      });
+
+      //임의로 킥보드 위치 넣어놓음!!!!!!!!
+      var recommed_kickboards=[ //순위, 회사이름, id, 가격, 거리, 이동시간, 걷는시간, 위치
+             [1, 'beam', 2, 1000, 300, 600, 20, 35.887163, 128.607956],
+             [2, 'beam', 1, 1100, 350, 650, 40, 35.889163, 128.608486],
+             [3, 'xingxing', 1, 1500, 400, 700, 60, 35.887163, 128.609956]
+      ];
+
+      //지도에 킥보드들 마킹하기
+      for(var i = 0; i < recommed_kickboards.length; i++){
+        //var title = recommed_kickboards[i][0];
+        var pos= new google.maps.LatLng(recommed_kickboards[i][7], recommed_kickboards[i][8]);
+
+        if(recommed_kickboards[i][1] === 'beam') {
+          var m= new google.maps.Marker({
+            position: pos,
+            icon: 'http://maps.google.com/mapfiles/ms/icons/purple-dot.png',
+            map: map
+          });
+        }
+        if(recommed_kickboards[i][1] === 'gcooter') {
+          var m= new google.maps.Marker({
+            position: pos,
+            icon: 'http://maps.google.com/mapfiles/ms/icons/green-dot.png',
+            map: map
+          });
+        }
+        if(recommed_kickboards[i][1] === 'xingxing') {
+          var m= new google.maps.Marker({
+            position: pos,
+            icon: 'http://maps.google.com/mapfiles/ms/icons/yellow-dot.png',
+            map: map
+          });
+        }
+
+        google.maps.event.addListener(m, 'click', (function(m, i) {
+          return function() {
+            infowindow.setContent('<div class="wrap">' + recommed_kickboards[i][0] + '순위</br>' + recommed_kickboards[i][1]
+                                    + '</br>id : ' + recommed_kickboards[i][2] + '</br></br>가격 : ' + recommed_kickboards[i][3]
+                                    + '원</br>이동 거리 : ' + recommed_kickboards[i][4] + 'm</br>이동 시간 : ' + recommed_kickboards[i][5]
+                                    + '초</br>걷는 시간' + recommed_kickboards[i][6] + '초</br>' + '</div>');
+            infowindow.open(map, m);
+          }
+        })(m, i));
+        if (m) {
+          m.addListener('click', function() {
+            map.setCenter(this.getPosition());
+            map.setZoom(16);
+          });
+        }
+      }
+
+
+      console.log('object');
+    }, function (error) { //에러처리
+      console.log(error);
+    });
+
+  </script>
+
+  <div class="map_btn_div">
+    <input type='button' value='이용하기!' name="map_btn2" class="map_btn2" />
+  </div>
+
+
+</body>
+
+
+
+</html>
