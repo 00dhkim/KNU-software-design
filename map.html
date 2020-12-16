@@ -24,6 +24,67 @@
   </style>
 
   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAy7kmlOMSRM1lkU8GP8T605ciZu-uDABQ&callback=initMap"></script>
+
+  <script>
+  async function signup(latitude, lonitude)
+  {
+      const lat = latitude
+      const lon = longitude
+
+      try {
+          let response = await fetch("http://127.0.0.1/kickboard/location?lat=" + lat + "&lon=" + lon + "&dist=1000")
+          let result = await response.json()
+
+          for(let i = 0; i < result.length; ++i) {
+            var title = result[i].company + result[i].id
+            var pos= new google.maps.LatLng(result[i].kickboard_pos_lat, result[i].kickboard_pos_lon);
+
+            if(result[i].company === 'Beam') {
+              var m= new google.maps.Marker({
+                position: pos,
+                title: title,
+                icon: 'http://maps.google.com/mapfiles/ms/icons/purple-dot.png',
+                map: map
+              });
+            }
+            if(result[i].company === 'Gbike') {
+              var m= new google.maps.Marker({
+                position: pos,
+                title: title,
+                icon: 'http://maps.google.com/mapfiles/ms/icons/green-dot.png',
+                map: map
+              });
+            }
+            if(result[i].company === 'XingXing') {
+              var m= new google.maps.Marker({
+                position: pos,
+                title: title,
+                icon: 'http://maps.google.com/mapfiles/ms/icons/yellow-dot.png',
+                map: map
+              });
+            }
+
+            google.maps.event.addListener(m, 'click', (function(m, i) {
+              return function() {
+                infowindow.setContent('<div class="wrap">' + result[i].company + result[i].id + '</div>');
+                infowindow.open(map, m);
+              }
+            })(m, i));
+            if (m) {
+              m.addListener('click', function() {
+                map.setCenter(this.getPosition());
+                map.setZoom(16);
+              });
+            }
+          }
+
+      }
+      catch (error) {
+          console.log(error)
+      }
+  }
+  </script>
+
 </head>
 
 <body>
@@ -57,8 +118,10 @@
         map: map
       });
 
+      showAllKickboards(latitude, longitude);
+
       //임의로 킥보드 위치 넣어놓음!!!!!!!!
-      var beams=[
+      /*var beams=[
              ['빔1', 35.889163, 128.608486],
              ['빔2', 35.887163, 128.607956]
       ];
@@ -67,9 +130,10 @@
       ];
       var gcooters=[
         ['지쿠터1', 35.886163, 128.608956]
-      ];
+      ];*/
+
       //지도에 킥보드들 마킹하기
-      for(var i = 0; i < beams.length; i++){
+      /*for(var i = 0; i < beams.length; i++){
         var title = beams[i][0];
         var pos= new google.maps.LatLng(beams[i][1], beams[i][2]);
 
@@ -142,7 +206,7 @@
             map.setZoom(16);
           });
         }
-      }
+      }*/
 
       console.log('object');
     }, function (error) { //에러처리
