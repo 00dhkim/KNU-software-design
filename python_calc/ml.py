@@ -5,10 +5,6 @@
 백엔드로부터 각종 데이터를 받은 후, 각 킥보드에 대한 사용자 선호도를 계산하여 반환
 내가 DB와의 통신을 하는 경우는 없음, 전부 인자로 받아서 처리
 
-TODO:
-- 판단에 쓰이는 3가지 값 normalize 하기
-- user_taste 업데이트 하기
-
 단위
 - 가격: 원 (1000 ~ 5000)
 - 거리: meter (10 ~ 100, 걷기), (100 ~ 3000, 타기)
@@ -162,6 +158,6 @@ def main_(argv):
 
 if __name__ == '__main__':
     argv = ['router/test.py', '[37.43241,127.65321]', '[37.43,127.65]', '[{\"battery\":100,\"isAvailable\":true,\"kickboard_pos_lat\":37.43523,\"kickboard_pos_lon\":127.53225,\"max_kickboard_distance\":20,\"company\":\"Beam\"},{\"battery\":78,\"isAvailable\":true,\"kickboard_pos_lat\":37.87643,\"kickboard_pos_lon\":127.53213,\"max_kickboard_distance\":21,\"company\":\"XingXing\"},{\"battery\":90,\"isAvailable\":true,\"kickboard_pos_lat\":37.43241,\"kickboard_pos_lon\":127.65321,\"max_kickboard_distance\":32,\"company\":\"Gbike\"}]']
-    # print(sys.argv)
+    #print(sys.argv)
     main_(argv)
 
