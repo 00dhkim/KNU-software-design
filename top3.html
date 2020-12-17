@@ -39,11 +39,13 @@
       return sval;
   }
 
+  var select_price = 0;
+  var select_kickboard_time = 0;
+  var select_walk_time = 0;
+
   async function showAllKickboards()
   {
-    var select_price = 0;
-    var select_kickboard_time = 0;
-    var select_walk_time = 0;
+
       try {
         const lat = getParam("usr_lat");
         const lon = getParam("usr_lon");
@@ -112,24 +114,24 @@
                 map.setZoom(16);
               });
             }
-
           }
         } catch (error) {
             console.log(error)
         }
+  }
 
-        var inputElement = document.getElementById("recom_btn1");
-        inputElement.addEventListener("click", async function visitPosition() {
-            let fc = await fetch("http://wiki.skeep.me:3000/user/usekickboard?price="+ select_price + "&kickboard_time=" + select_kickboard_time + "&walk_time=" + select_walk_time, {
-                method: "GET",
-                headers: {
-                    'Content-Type': 'application/json',
-                    'authorization': localStorage.getItem("jwt-token")
-                }
-            });
-
-            //location.href = "loading.html"
-        }, false);
+  function visitPosition() {
+    if(select_price != 0) {
+      // alert(select_price);
+      fetch("http://wiki.skeep.me:3000/user/usekickboard?price="+ select_price + "&kickboard_time=" + select_kickboard_time + "&walk_time=" + select_walk_time, {
+          method: "GET",
+          headers: {
+              'Content-Type': 'application/json',
+              'authorization': localStorage.getItem("jwt-token")
+          }
+      })
+      location.href = 'loading.html'
+    }
   }
   </script>
 
@@ -177,7 +179,7 @@
 
   <div class="recom_btn_div">
     <p class="recom_txt">* 추천하는 3개의 킥보드입니다! *</p>
-    <input id="recom_btn1" type='button' value='이용하기!' name="recom_btn1" class="recom_btn1"/>
+    <input id="recom_btn1" type='button' value='이용하기!' name="recom_btn1" class="recom_btn1" onclick="visitPosition()"/>
   </div>
 
 
