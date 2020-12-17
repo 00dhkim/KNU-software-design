@@ -5,10 +5,6 @@
 백엔드로부터 각종 데이터를 받은 후, 각 킥보드에 대한 사용자 선호도를 계산하여 반환
 내가 DB와의 통신을 하는 경우는 없음, 전부 인자로 받아서 처리
 
-TODO:
-- 판단에 쓰이는 3가지 값 normalize 하기
-- user_taste 업데이트 하기
-
 단위
 - 가격: 원 (1000 ~ 5000)
 - 거리: meter (10 ~ 100, 걷기), (100 ~ 3000, 타기)
@@ -99,11 +95,12 @@ def main_(argv):
     user_pos = json.loads(argv[1])
     arrival_pos = json.loads(argv[2])
     kickboards_dicts = json.loads(argv[3])
+    user_taste = json.loads(argv[4])
 
     kickboard_list = []
     for kickboard_raw in kickboards_dicts:
         kb = Kickboard()
-        # kb.id_ = kickboard_raw['id'] TEST:
+        kb.id_ = kickboard_raw['id']
         kb.battery = kickboard_raw['battery']
         kb.kickboard_pos = [kickboard_raw['kickboard_pos_lat'],\
                             kickboard_raw['kickboard_pos_lon']]
@@ -113,7 +110,7 @@ def main_(argv):
 
         kickboard_list.append(kb)
 
-    user_taste = [0.3, 0.2, 0.5] # TEST:
+#    user_taste = [0.3, 0.2, 0.5] # TEST:
 
     ### step 3, 4. calculate preference about a kickboard
     ###            and generate result list
@@ -154,15 +151,14 @@ def main_(argv):
         # TODO: 리턴 형식 맞추기 (json)
         # 순위, 회사이름, id, 가격, 이동시간, 걷는시간, 킥보드위도, 킥보드경도
         rank += 1
-        print("[%d, %s, %d, %d, %d, %d, %lf, %lf]"%(rank, company, kickboard_id, price, kickboard_time, walk_time, result[1].kickboard_pos[0], result[1].kickboard_pos[1]), end='')
+        print("[%d, %s, %s, %d, %d, %d, %lf, %lf]"%(rank, company, kickboard_id, price, kickboard_time, walk_time, result[1].kickboard_pos[0], result[1].kickboard_pos[1]), end='')
         if(result != results[-1]):
             print(", ",end='')
     print("]", end='')
 
 
 if __name__ == '__main__':
-    argv = sys.argv
-    #argv = ['router/test.py', '[37.43241,127.65321]', '[37.43,127.65]', '[{\"battery\":100,\"isAvailable\":true,\"kickboard_pos_lat\":37.43523,\"kickboard_pos_lon\":127.53225,\"max_kickboard_distance\":20,\"company\":\"Beam\"},{\"battery\":78,\"isAvailable\":true,\"kickboard_pos_lat\":37.87643,\"kickboard_pos_lon\":127.53213,\"max_kickboard_distance\":21,\"company\":\"XingXing\"},{\"battery\":90,\"isAvailable\":true,\"kickboard_pos_lat\":37.43241,\"kickboard_pos_lon\":127.65321,\"max_kickboard_distance\":32,\"company\":\"Gbike\"}]']
-    # print(sys.argv)
-    main_(argv)
+    # argv = ['router\\\\test.py', '[35.888336,128.607344]', '[37.43,127.65]', '[{\"battery\":78,\"isAvailable\":true,\"kickboard_pos_lat\":35.888736,\"kickboard_pos_lon\":128.607296,\"max_kickboard_distance\":21000,\"company\":\"XingXing\",\"id\":\"0\"},{\"battery\":90,\"isAvailable\":true,\"kickboard_pos_lat\":35.888327,\"kickboard_pos_lon\":128.607344,\"max_kickboard_distance\":32000,\"company\":\"Gbike\",\"id\":\"0\"}]', '[0.3333333333333333,0.3333333333333333,0.3333333333333333]']
+    # print(argv)
+    main_(sys.argv)
 
