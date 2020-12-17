@@ -51,10 +51,10 @@
         let result = await response.json()
 
           for(let i = 0; i < result.length; ++i) {
-            var title = result[i].company + result[i].id
-            var pos= new google.maps.LatLng(result[i].kickboard_pos_lat, result[i].kickboard_pos_lon);
+            var title = result[i][1] + result[i][2]
+            var pos= new google.maps.LatLng(result[i][6], result[i][7]); //위치값
 
-            if(result[i].company === 'Beam') {
+            if(result[i][1] === 'Beam') {
               var m= new google.maps.Marker({
                 position: pos,
                 title: title,
@@ -62,7 +62,7 @@
                 map: map
               });
             }
-            if(result[i].company === 'Gbike') {
+            if(result[i][1] === 'Gbike') {
               var m= new google.maps.Marker({
                 position: pos,
                 title: title,
@@ -70,7 +70,7 @@
                 map: map
               });
             }
-            if(result[i].company === 'XingXing') {
+            if(result[i][1] === 'XingXing') {
               var m= new google.maps.Marker({
                 position: pos,
                 title: title,
@@ -81,12 +81,11 @@
 
             google.maps.event.addListener(m, 'click', (function(m, i) {
               return function() {
-                infowindow.setContent('<div class="wrap">' + recommed_kickboards[i][0] + '순위</br>' + recommed_kickboards[i][1]
-                                        + '</br>id : ' + recommed_kickboards[i][2] + '</br></br>가격 : ' + recommed_kickboards[i][3]
-                                        + '원</br>이동 거리 : ' + recommed_kickboards[i][4] + 'm</br>이동 시간 : ' + recommed_kickboards[i][5]
-                                        + '초</br>걷는 시간' + recommed_kickboards[i][6] + '초</br>' + '</div>');
+                infowindow.setContent('<div class="wrap">' + result[i][0] + '순위</br>' + result[i][1]
+                                        + '</br>id : ' + result[i][2] + '</br></br>가격 : ' + result[i][3]
+                                        + '원</br>이동 시간 : ' + result[i][4] + '초</br>걷는 시간' + result[i][5] + '초</br>' + '</div>');
                 infowindow.open(map, m);
-                selected_kickboard = recommed_kickboards[i][1] + recommed_kickboards[i][2];
+                selected_kickboard = result[i][1] + result[i][2];
               }
             })(m, i));
             if (m) {
