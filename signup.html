@@ -65,38 +65,46 @@
     </script>
 </head>
 <body class="body">
-    <h1 class="login">Sign up</h1>
+    <h1 class="title">Sign up</h1>
     
-    <div style="text-align: center;">   
-        <div >
-            <a>이름</a>
-            <input type="text" id="name" name="name">
-            <br>
-            <a>ID</a>
-            <input type="text" id="id" name="id">
-            <br>
-            <a>PW</a>
-            <input type="password" id="pw" name="pw">
+    <div style="text-align: center;">  
+        <div style="display:inline-table"> 
+            <div class="inputbox">
+                <a>이름</a>
+                <input type="text" id="name" name="name">
+                <br>
+                <a>ID</a>
+                <input type="text" id="id" name="id">
+                <br>
+                <a>PW</a>
+                <input type="password" id="pw" name="pw">
+            </div>
         </div>
-        <h3 style="color: white;">추천 서비스 이용을 위한 필수 항목</h3>
-        <h4>-가격-</h4>
-        <div  >
-            <input type="radio" name="price" value="high">매우 중요</input>
-            <input type="radio" name="price" value="mid">중요</input>
-            <input type="radio" name="price" value="low">덜 중요</input>
+        <br>
+        <h3 style="color: white; margin-bottom: 0px;">추천 서비스 이용을 위한 필수 항목</h3>
+        <div style="display:inline-table;text-align: center;">
+            <div style="text-align: left;">
+                <h4 style="margin-bottom:5px;">- 가격</h4>
+                <div  >
+                    <input type="radio" name="price" value="high">매우 중요</input>
+                    <input type="radio" name="price" value="mid">중요</input>
+                    <input type="radio" name="price" value="low">덜 중요</input>
+                </div>
+                <h4 style="margin-bottom: 5px;">- 킥보드를 타는 시간</h4>
+                <div>
+                    <input type="radio" name="kickboard_time" value="high">매우 중요</input>
+                    <input type="radio" name="kickboard_time" value="mid">중요</input>
+                    <input type="radio" name="kickboard_time" value="low">덜 중요</input>
+                </div>
+                <h4 style="margin-bottom: 5px;">- 걷는 시간</h4>
+                <div>
+                    <input type="radio" name="walk_time" value="high">매우 중요</input>
+                    <input type="radio" name="walk_time" value="mid">중요</input>
+                    <input type="radio" name="walk_time" value="low">덜 중요</input>
+                </div>
+            </div>
         </div>
-        <h4>-킥보드를 타는 시간-</h4>
-        <div>
-            <input type="radio" name="kickboard_time" value="high">매우 중요</input>
-            <input type="radio" name="kickboard_time" value="mid">중요</input>
-            <input type="radio" name="kickboard_time" value="low">덜 중요</input>
-        </div>
-        <h4>-걷는 시간-</h4>
-        <div>
-            <input type="radio" name="walk_time" value="high">매우 중요</input>
-            <input type="radio" name="walk_time" value="mid">중요</input>
-            <input type="radio" name="walk_time" value="low">덜 중요</input>
-        </div>
+        <br>
         <br>
         <input class="signup_btn" type="button" onclick="signup()" value="회원가입"/>
     </div>

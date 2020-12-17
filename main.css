@@ -24,6 +24,7 @@
 .title {
   color:rgb(255, 255, 255);
   text-shadow: 4px 2px rgb(253, 235, 76);
+  font-size: 50px;
 }
 
 .login {
@@ -84,6 +85,12 @@
   font-family: NEXON Lv1 Gothic OTF;
   display: inline-table;
   vertical-align: middle;
+}
+
+.inputbox {
+  width: 200px;
+  text-align: right;
+
 }
 
 .list {
