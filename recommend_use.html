@@ -131,21 +131,22 @@
       google.maps.event.addListener(map, 'click', function(event) {
         placeMarker(event.latLng);
       })
-      function placeMarker(location) {
+      function placeMarker(loc) {
         if(marker) {
           marker.setMap(null);
         }
         marker = new google.maps.Marker({
-          position: location,
+          position: loc,
           map: map
         });
         //센터 바꾸기
-        map.setCenter(location);
+        map.setCenter(loc);
         var inputElement = document.getElementById("recom_btn1");
         inputElement.addEventListener("click",  function visitPosition()
           {
             //alert(location.lng());
-            location.href = "top3.html?usr_lat="+latitude+"&usr_lon="+longitude+"&arrival_lat="+location.lat()+"&arrival_lon="+location.lng();
+            location.href = "top3.html?usr_lat="+latitude+"&usr_lon="+longitude+"&arrival_lat="+loc.lat()+"&arrival_lon="+loc.lng();
+
           }, false);
       }
 
