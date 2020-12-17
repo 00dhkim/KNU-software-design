@@ -16,10 +16,10 @@ import json
 import sys
 
 def main_(argv):
-    price = json.loads(argv[0])
-    kickboard_time = json.loads(argv[1])
-    walk_time = json.loads(argv[2])
-    user_taste = json.loads(argv[3])
+    price = int(argv[1])
+    kickboard_time = int(argv[2])
+    walk_time = int(argv[3])
+    user_taste = json.loads(argv[4])
 
     total = price / 5000 + kickboard_time / 500 + walk_time / 100
 
@@ -37,6 +37,7 @@ def main_(argv):
 
 if __name__ == '__main__':
     # price, kickboard_time, walk_time, user_taste
-    # argv = [750, 74, 5, [0.3, 0.2, 0.5]]
-    main_(sys.argv)
+    argv = ['python_calc/user_taste_update.py', '600', '59', '179', '[0.2857142857142857,0.42857142857142855,0.2857142857142857]']
+    # main_(sys.argv)
+    main_(argv)
     
