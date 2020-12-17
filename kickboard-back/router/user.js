@@ -41,7 +41,8 @@ router.get("/usekickboard", verifyToken, async (req, res) => {
     }
 
     PythonShell.run('../python_calc/user_taste_update.py', option, (err, results) => {
-        res.send(results)
+        res.send(JSON.parse(results[0]))
+        console.log(results[0])
     })
 })
 
