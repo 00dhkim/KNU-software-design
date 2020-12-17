@@ -54,9 +54,9 @@ def get_kickboard_speed(company):
     if company == 'Gbike':
         return 20 * 1000 / 3600
     elif company == 'XingXing':
-        return 25 * 1000 / 3600 # TODO:
+        return 25 * 1000 / 3600
     elif company == 'Beam':
-        return 25 * 1000 / 3600 # TODO:
+        return 25 * 1000 / 3600
 
 
 # 킥보드 하나에 대한 연산을 수행하고 리턴
@@ -109,8 +109,6 @@ def main_(argv):
         kb.isAvailable = kickboard_raw['isAvailable']
 
         kickboard_list.append(kb)
-
-#    user_taste = [0.3, 0.2, 0.5] # TEST:
 
     ### step 3, 4. calculate preference about a kickboard
     ###            and generate result list
