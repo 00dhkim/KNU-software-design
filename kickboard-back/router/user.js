@@ -34,6 +34,7 @@ router.get("/optimal", verifyToken, async (req, res) => {
 })
 
 router.get("/usekickboard", verifyToken, async (req, res) => {
+    console.log("usekickboard execute" + req.decode.id)
     let snapshot = await database.ref("user/"+req.decode.id+"/taste").once("value")
     const option = {
         mode: 'text',
@@ -42,12 +43,13 @@ router.get("/usekickboard", verifyToken, async (req, res) => {
         scriptPath: '',
         args: [req.query.price, req.query.kickboard_time, req.query.walk_time, JSON.stringify([snapshot.val().price, snapshot.val().kickboard_time, snapshot.val().walk_time])]
     }
+    console.log("input"+ req.query.price + " " + req.query.kickboard_time + " " + req.query_walk_time + " " + snapshot.val().price + " " +  snapshot.val().kickboard_time + " " + snapshot.val().walk_time)
 
     PythonShell.run('python_calc/user_taste_update.py', option, async (err, results) => {
         if(err)
             throw err
         const update = JSON.parse(results[0])
-        console.log(update)
+        console.log("output:" + update)
         const updb = await database.ref("user/"+req.decode.id+"/taste").set({
             price: update[0],
             kickboard_time: update[1],
