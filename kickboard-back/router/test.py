@@ -156,6 +156,6 @@ def main_(argv):
 
 
 if __name__ == '__main__':
-    argv = ['router\\\\test.py', '[35.888836,128.6081577]', '[35.888836,128.6081577]', '[{\"battery\":78,\"isAvailable\":true,\"kickboard_pos_lat\":35.888736,\"kickboard_pos_lon\":128.607296,\"max_kickboard_distance\":21000,\"company\":\"XingXing\",\"id\":\"0\"},{\"battery\":90,\"isAvailable\":true,\"kickboard_pos_lat\":35.888327,\"kickboard_pos_lon\":128.607344,\"max_kickboard_distance\":32000,\"company\":\"Gbike\",\"id\":\"0\"}]', '[0.3333333333333333,0.3333333333333333,0.3333333333333333]']
-    main_(argv)
+    # argv = ['router\\\\test.py', '[35.888836,128.6081577]', '[35.888836,128.6081577]', '[{\"battery\":78,\"isAvailable\":true,\"kickboard_pos_lat\":35.888736,\"kickboard_pos_lon\":128.607296,\"max_kickboard_distance\":21000,\"company\":\"XingXing\",\"id\":\"0\"},{\"battery\":90,\"isAvailable\":true,\"kickboard_pos_lat\":35.888327,\"kickboard_pos_lon\":128.607344,\"max_kickboard_distance\":32000,\"company\":\"Gbike\",\"id\":\"0\"}]', '[0.3333333333333333,0.3333333333333333,0.3333333333333333]']
+    main_(sys.argv)
 
