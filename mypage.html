@@ -20,6 +20,12 @@
           .then((value) => {
             let hello = document.getElementById("info")
             hello.innerText = value.id + "님 반갑습니다."
+            let price = document.getElementById("price")
+            price.innerText = "가격 " + value.taste.price
+            let kickboard_time = document.getElementById("kickboard_time");
+            kickboard_time.innerText = "이동 시간 " + value.taste.kickboard_time
+            let walk_time = document.getElementById("walk_time");
+            walk_time.innerText = "걷는 시간 " + value.taste.walk_time
           })
     </script>
 </head>
@@ -34,9 +40,9 @@
     <br>
     <div class="infobox" style="height: 160px;">
         <h3>나의 선호도</h3>
-        <p>가격</p>
-        <p>이동 시간</p>
-        <p>걷는 시간</p>
+        <p id="price">가격</p>
+        <p id="kickboard_time">이동 시간</p>
+        <p id="walk_time">걷는 시간</p>
     </div>
     <br>
     <div class="infobox" style="height: 190px;">

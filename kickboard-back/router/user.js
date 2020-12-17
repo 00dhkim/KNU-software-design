@@ -26,6 +26,8 @@ router.get("/optimal", verifyToken, async (req, res) => {
     
     // 파이썬 연결
     PythonShell.run('router/test.py', option, (err, results) => {
+        if(err)
+            throw err
         res.send(JSON.parse(results[0]));
         console.log(results[0]);
     })
@@ -42,7 +44,10 @@ router.get("/usekickboard", verifyToken, async (req, res) => {
     }
 
     PythonShell.run('../python_calc/user_taste_update.py', option, async (err, results) => {
+        if(err)
+            throw err
         const update = JSON.parse(results[0])
+        console.log(update)
         const updb = await database.ref("user/"+req.decode.id+"/taste").set({
             price: update[0],
             kickboard_time: update[1],
