@@ -41,7 +41,7 @@ router.get("/usekickboard", verifyToken, async (req, res) => {
         args: [req.query.price, req.query.kickboard_time, req.query.walk_time, JSON.stringify([snapshot.val().price, snapshot.val().kickboard_time, snapshot.val().walk_time])]
     }
 
-    PythonShell.run('../python_calc/user_taste_update.py', option, (err, results) => {
+    PythonShell.run('../python_calc/user_taste_update.py', option, async (err, results) => {
         const update = JSON.parse(results[0])
         const updb = await database.ref("user/"+req.decode.id+"/taste").set({
             price: update[0],
