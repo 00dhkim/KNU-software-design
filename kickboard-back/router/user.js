@@ -26,7 +26,8 @@ router.get("/optimal", verifyToken, async (req, res) => {
     
     // 파이썬 연결
     PythonShell.run('router/test.py', option, (err, results) => {
-        res.send(results)
+        res.send(JSON.parse(results[0]));
+        console.log(results[0]);
     })
 })
 
