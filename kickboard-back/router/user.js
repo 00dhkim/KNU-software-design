@@ -43,7 +43,7 @@ router.get("/usekickboard", verifyToken, async (req, res) => {
         args: [req.query.price, req.query.kickboard_time, req.query.walk_time, JSON.stringify([snapshot.val().price, snapshot.val().kickboard_time, snapshot.val().walk_time])]
     }
 
-    PythonShell.run('../python_calc/user_taste_update.py', option, async (err, results) => {
+    PythonShell.run('python_calc/user_taste_update.py', option, async (err, results) => {
         if(err)
             throw err
         const update = JSON.parse(results[0])
