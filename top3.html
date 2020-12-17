@@ -41,6 +41,9 @@
 
   async function showAllKickboards()
   {
+    var select_price = 0;
+    var select_kickboard_time = 0;
+    var select_walk_time = 0;
       try {
         const lat = getParam("usr_lat");
         const lon = getParam("usr_lon");
@@ -62,9 +65,7 @@
             }
         })
         let result = await response.json()
-        var select_price = 0;
-        var select_kickboard_time = 0;
-        var select_walk_time = 0;
+
         for(let i = 0; i < result.length; ++i) {
             var title = result[i][1] + result[i][2]
             var pos= new google.maps.LatLng(result[i][6], result[i][7]); //위치값
