@@ -2,7 +2,7 @@ import jwt from 'jsonwebtoken'
 
 function verifyToken(req, res, next) {
     try {
-        req.decoded = jwt.verify(req.query.authorization, global.JWT_SECRET)
+        req.decoded = jwt.verify(req.headers.authorization, global.JWT_SECRET)
         return next()
     }
     catch (error) {

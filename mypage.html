@@ -10,12 +10,17 @@
         {
             history.back();
         }
-        async function getName()
-        {
-            let fc = await fetch("http://wiki.skeep.me:3000/user/info")
-            let response = await fc.json()
-            
-        }
+        fetch("http://wiki.skeep.me:3000/user/info", {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'authorization': localStorage.getItem("jwt-token")
+            }
+        }).then((response) => response.json())
+          .then((value) => {
+            let hello = document.getElementById("info")
+            hello.innerText = response.id + "님 반갑습니다."
+          })
     </script>
 </head>
 <body class="body">
@@ -24,7 +29,7 @@
         
     </span>
     <div>
-        <p>**님 반갑습니다.</p>
+        <p id="info">**님 반갑습니다.</p>
     </div>
     <br>
     <div class="infobox">
