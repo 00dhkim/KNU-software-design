@@ -12,13 +12,14 @@ learning_rate(alpha): 0.01
 
 '''
 
+import json
 import sys
 
 def main_(argv):
-    price = argv[0]
-    kickboard_time = argv[1]
-    walk_time = argv[2]
-    user_taste = argv[3]
+    price = json.loads(argv[0])
+    kickboard_time = json.loads(argv[1])
+    walk_time = json.loads(argv[2])
+    user_taste = json.loads(argv[3])
 
     total = price / 5000 + kickboard_time / 500 + walk_time / 100
 
