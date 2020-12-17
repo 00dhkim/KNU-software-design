@@ -1,6 +1,6 @@
 # overall
 
-http://localhost/user/optimal?usr_lat=35.888336&usr_lon=128.607344&arrival_lat=37.43&arrival_lon=127.65
+http://localhost:3000/user/optimal?usr_lat=35.888836&usr_lon=128.6081577&arrival_lat=35.888836&arrival_lon=128.6081577
 
 모든 API는 에러 상황이나 메시지를 출력해야 할 때 code와 message를 반환함
 
