@@ -149,7 +149,7 @@ def main_(argv):
         # TODO: 리턴 형식 맞추기 (json)
         # 순위, 회사이름, id, 가격, 이동시간, 걷는시간, 킥보드위도, 킥보드경도
         rank += 1
-        print("[%d, %s, %s, %d, %d, %d, %lf, %lf]"%(rank, company, kickboard_id, price, kickboard_time, walk_time, result[1].kickboard_pos[0], result[1].kickboard_pos[1]), end='')
+        print("[%d, \"%s\", %s, %d, %d, %d, %lf, %lf]"%(rank, company, kickboard_id, price, kickboard_time, walk_time, result[1].kickboard_pos[0], result[1].kickboard_pos[1]), end='')
         if(result != results[-1]):
             print(", ",end='')
     print("]")

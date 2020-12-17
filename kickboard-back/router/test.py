@@ -149,13 +149,13 @@ def main_(argv):
         # TODO: 리턴 형식 맞추기 (json)
         # 순위, 회사이름, id, 가격, 이동시간, 걷는시간, 킥보드위도, 킥보드경도
         rank += 1
-        print("[%d, %s, %s, %d, %d, %d, %lf, %lf]"%(rank, company, kickboard_id, price, kickboard_time, walk_time, result[1].kickboard_pos[0], result[1].kickboard_pos[1]), end='')
+        print("[%d, \"%s\", %s, %d, %d, %d, %lf, %lf]"%(rank, company, kickboard_id, price, kickboard_time, walk_time, result[1].kickboard_pos[0], result[1].kickboard_pos[1]), end='')
         if(result != results[-1]):
             print(", ",end='')
     print("]")
 
 
 if __name__ == '__main__':
-    # argv = ['router\\\\test.py', '[35.888836,128.6081577]', '[35.888836,128.6081577]', '[{\"battery\":78,\"isAvailable\":true,\"kickboard_pos_lat\":35.888736,\"kickboard_pos_lon\":128.607296,\"max_kickboard_distance\":21000,\"company\":\"XingXing\",\"id\":\"0\"},{\"battery\":90,\"isAvailable\":true,\"kickboard_pos_lat\":35.888327,\"kickboard_pos_lon\":128.607344,\"max_kickboard_distance\":32000,\"company\":\"Gbike\",\"id\":\"0\"}]', '[0.3333333333333333,0.3333333333333333,0.3333333333333333]']
-    main_(sys.argv)
+    argv = ['router\\\\test.py', '[35.888836,128.6081577]', '[35.888836,128.6081577]', '[{\"battery\":78,\"isAvailable\":true,\"kickboard_pos_lat\":35.888736,\"kickboard_pos_lon\":128.607296,\"max_kickboard_distance\":21000,\"company\":\"XingXing\",\"id\":\"0\"},{\"battery\":90,\"isAvailable\":true,\"kickboard_pos_lat\":35.888327,\"kickboard_pos_lon\":128.607344,\"max_kickboard_distance\":32000,\"company\":\"Gbike\",\"id\":\"0\"}]', '[0.3333333333333333,0.3333333333333333,0.3333333333333333]']
+    main_(argv)
 
