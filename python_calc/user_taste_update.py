@@ -30,12 +30,12 @@ def main_(argv):
     user_taste[1] += d_kickboard_time * 0.01
     user_taste[2] += d_walk_time * 0.01
 
-    print(user_taste[0], user_taste[1], user_taste[2])
+    print('[',end='')
+    print(user_taste[0],',', user_taste[1],',', user_taste[2],end='')
+    print(']')
 
 if __name__ == '__main__':
-    print("user_taste_update executed")
-    # print(sys.argv)
     # price, kickboard_time, walk_time, user_taste
-    argv = [750, 74, 5, [0.3, 0.2, 0.5]]
-    main_(argv)
+    # argv = [750, 74, 5, [0.3, 0.2, 0.5]]
+    main_(sys.argv)
     
