@@ -125,91 +125,6 @@
 
       showAllKickboards(latitude, longitude);
 
-/*
-      //임의로 킥보드 위치 넣어놓음!!!!!!!!
-      var beams=[
-             ['빔1', 35.889163, 128.608486],
-             ['빔2', 35.887163, 128.607956]
-      ];
-      var xingxings=[
-        ['씽씽1', 35.887163, 128.609956]
-      ];
-      var gcooters=[
-        ['지쿠터1', 35.886163, 128.608956]
-      ];
-      //지도에 킥보드들 마킹하기
-      for(var i = 0; i < beams.length; i++){
-        var title = beams[i][0];
-        var pos= new google.maps.LatLng(beams[i][1], beams[i][2]);
-
-        var m= new google.maps.Marker({
-          position: pos,
-          title: title,
-          icon: 'http://maps.google.com/mapfiles/ms/icons/purple-dot.png',
-          map: map
-        });
-
-        google.maps.event.addListener(m, 'click', (function(m, i) {
-          return function() {
-            infowindow.setContent('<div class="wrap">' + beams[i][0] + '</div>');
-            infowindow.open(map, m);
-          }
-        })(m, i));
-        if (m) {
-          m.addListener('click', function() {
-            map.setCenter(this.getPosition());
-            map.setZoom(16);
-          });
-        }
-      }
-      for(var i = 0; i < xingxings.length; i++){
-        var title = xingxings[i][0];
-        var pos= new google.maps.LatLng(xingxings[i][1], xingxings[i][2]);
-
-        var m= new google.maps.Marker({
-          position: pos,
-          title: title,
-          icon: 'http://maps.google.com/mapfiles/ms/icons/yellow-dot.png',
-          map: map,
-        });
-
-        google.maps.event.addListener(m, 'click', (function(m, i) {
-          return function() {
-            infowindow.setContent('<div class="wrap">' + xingxings[i][0] + '</div>');
-            infowindow.open(map, m);
-          }
-        })(m, i));
-        if (m) {
-          m.addListener('click', function() {
-            map.setCenter(this.getPosition());
-            map.setZoom(16);
-          });
-        }
-      }
-      for(var i = 0; i < gcooters.length; i++){
-        var title = gcooters[i][0];
-        var pos= new google.maps.LatLng(gcooters[i][1], gcooters[i][2]);
-
-        var m= new google.maps.Marker({
-          position: pos,
-          title: title,
-          icon: 'http://maps.google.com/mapfiles/ms/icons/green-dot.png',
-          map: map,
-        });
-        google.maps.event.addListener(m, 'click', (function(m, i) {
-          return function() {
-            infowindow.setContent('<div class="wrap">' + gcooters[i][0] + '</div>');
-            infowindow.open(map, m);
-          }
-        })(m, i));
-        if (m) {
-          m.addListener('click', function() {
-            map.setCenter(this.getPosition());
-            map.setZoom(16);
-          });
-        }
-      }
-*/
       //선택한 곳 마킹하기
       var marker = null;
       var arrival_location = null;
@@ -220,20 +135,18 @@
         if(marker) {
           marker.setMap(null);
         }
-
         marker = new google.maps.Marker({
           position: location,
           map: map
         });
         //센터 바꾸기
         map.setCenter(location);
-
         var inputElement = document.getElementById("recom_btn1");
         inputElement.addEventListener("click",  function visitPosition()
           {
-            location.href = "top3.html?usr_lat="+latitude+"&use_lon="+longitude+"&arrival_lat="+location.lat()+"&arrival_lon="+location.lon()
+            //alert(location.lng());
+            location.href = "top3.html?usr_lat="+latitude+"&usr_lon="+longitude+"&arrival_lat="+location.lat()+"&arrival_lon="+location.lng();
           }, false);
-
       }
 
       console.log('object');
