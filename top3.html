@@ -122,7 +122,6 @@
 
   function visitPosition() {
     if(select_price != 0) {
-      // alert(select_price);
       fetch("http://wiki.skeep.me:3000/user/usekickboard?price="+ select_price + "&kickboard_time=" + select_kickboard_time + "&walk_time=" + select_walk_time, {
           method: "GET",
           headers: {
@@ -130,7 +129,8 @@
               'authorization': localStorage.getItem("jwt-token")
           }
       })
-      location.href = 'loading.html'
+      alert("가격: " + select_price + "\n킥보드 시간: " + select_kickboard_time + "\n걷는 시간: " + select_walk_time)
+      location.href = "loading.html"
     }
   }
   </script>
