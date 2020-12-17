@@ -48,6 +48,7 @@ router.get("/usekickboard", verifyToken, async (req, res) => {
 })
 
 router.get("/info", verifyToken, async (req, res) => {
+    console.log(req.decode)
     let snapshot = await database.ref("user/"+req.decode.id).once("value")
     res.send(snapshot.val())
 })

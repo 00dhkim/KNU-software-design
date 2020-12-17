@@ -19,7 +19,7 @@
         }).then((response) => response.json())
           .then((value) => {
             let hello = document.getElementById("info")
-            hello.innerText = response.id + "님 반갑습니다."
+            hello.innerText = value.id + "님 반갑습니다."
           })
     </script>
 </head>
