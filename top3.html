@@ -93,7 +93,7 @@
             }
 
             google.maps.event.addListener(m, 'click', (async function(m, i) {
-              return function() {
+              return async function() {
                 infowindow.setContent('<div class="wrap">' + result[i][0] + '순위</br>' + result[i][1]
                                         + '</br>id : ' + result[i][2] + '</br></br>가격 : ' + result[i][3]
                                         + '원</br>이동 시간 : ' + result[i][4] + '초</br>걷는 시간' + result[i][5] + '초</br>' + '</div>');
