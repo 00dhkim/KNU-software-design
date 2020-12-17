@@ -53,7 +53,6 @@ router.get("/usekickboard", verifyToken, async (req, res) => {
             kickboard_time: update[1],
             walk_time: update[2]
         })
-        console.log(results[0])
     })
 })
 
