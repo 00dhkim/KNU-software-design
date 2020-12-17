@@ -15,7 +15,7 @@ const database = firebase.database()
 // 최적 킥보드를 계산 후 리턴 and DB에는 유저 선호도 값 update
 router.get("/optimal", verifyToken, async (req, res) => {
     let snapshot = await database.ref("user/"+req.decode.id+"/taste").once("value")
-    let kickboard = await getKickboard(Number(req.query.usr_lat), Number(req.query.usr_lon), 100)
+    let kickboard = await getKickboard(Number(req.query.usr_lat), Number(req.query.usr_lon), 1000)
     const option = {
         mode: 'text',
         pythonPath: '',
