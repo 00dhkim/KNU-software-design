@@ -37,7 +37,7 @@ def main_(argv):
 
 if __name__ == '__main__':
     # price, kickboard_time, walk_time, user_taste
-    argv = ['python_calc/user_taste_update.py', '600', '59', '179', '[0.2857142857142857,0.42857142857142855,0.2857142857142857]']
+    # argv = ['python_calc/user_taste_update.py', '600', '59', '179', '[0.2857142857142857,0.42857142857142855,0.2857142857142857]']
     # main_(sys.argv)
-    main_(argv)
+    main_(sys.argv)
     
