@@ -42,7 +42,12 @@ router.get("/usekickboard", verifyToken, async (req, res) => {
     }
 
     PythonShell.run('../python_calc/user_taste_update.py', option, (err, results) => {
-        res.send(JSON.parse(results[0]))
+        const update = JSON.parse(results[0])
+        const updb = await database.ref("user/"+req.decode.id+"/taste").set({
+            price: update[0],
+            kickboard_time: update[1],
+            walk_time: update[2]
+        })
         console.log(results[0])
     })
 })
