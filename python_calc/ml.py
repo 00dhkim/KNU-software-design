@@ -152,7 +152,7 @@ def main_(argv):
         print("[%d, %s, %s, %d, %d, %d, %lf, %lf]"%(rank, company, kickboard_id, price, kickboard_time, walk_time, result[1].kickboard_pos[0], result[1].kickboard_pos[1]), end='')
         if(result != results[-1]):
             print(", ",end='')
-    print("]", end='')
+    print("]")
 
 
 if __name__ == '__main__':
